@@ -1,8 +1,8 @@
-import { HouseIcon, CalendarIcon, UsersIcon, ChartBarIcon, UserCircleIcon } from '../icons'
+import { HouseIcon, CalendarIcon, UsersIcon, ChartBarIcon, UserCircleIcon } from '../../icons'
 
 
 const LinkStyles = 'w-7 h-7 md:w-8 md:h-8'
-export const Links = [
+export const NavigationLinks = [
   {
     name: 'Home',
     href: '/',

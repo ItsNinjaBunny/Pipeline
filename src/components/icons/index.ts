@@ -7,3 +7,6 @@ export * from './CirclePlusIcon';
 export * from './UserCircleIcon';
 export * from './EyeIcon';
 export * from './EyeSlashIcon';
+export * from './UpDownArrowIcon';
+export * from './HorizontalAdjustmentBarIcon';
+export * from './VerticalAdjustmentBarIcon';

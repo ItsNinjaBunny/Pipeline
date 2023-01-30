@@ -1,6 +1,6 @@
 import { DesktopNavigation } from './desktop/Desktop'
 import { MobileNavigation } from './mobile/Mobile'
-import { Links } from './Links';
+import { NavigationLinks } from './constants';
 import { useState } from 'react';
 
 export const Navigation = () => {
@@ -8,8 +8,8 @@ export const Navigation = () => {
 
   return (
     <>
-      <DesktopNavigation selected={selected} links={Links} className={`md:flex hidden`} />
-      <MobileNavigation selected={selected} className={`md:hidden`} links={Links} />
+      <DesktopNavigation selected={selected} links={NavigationLinks} className={`md:flex hidden`} />
+      <MobileNavigation selected={selected} className={`md:hidden`} links={NavigationLinks} />
     </>
   )
 }
