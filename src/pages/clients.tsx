@@ -2,9 +2,8 @@ import { type NextPage } from 'next';
 import Head from 'next/head';
 import { Navigation } from '../components/navigation/Navigation';
 import { VerticalAdjustmentBarIcon, CirclePlusIcon, UpDownArrowIcon } from '../components';
-import { Filter, Data, Card } from '../features/clients/';
+import { Filter, Data, ClientManager, Card } from '../features';
 import { useState } from 'react';
-import { ClientManager } from '../features/clients/components/client-manager/ClientManager';
 import React from 'react';
 
 const ClientsPage: NextPage = () => {

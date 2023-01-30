@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, UserCircleIcon } from '../../../../components/icons';
+import { ArrowLeftIcon, UserCircleIcon } from '../../../../components/';
 import { type Card } from '../../types';
 import Image from 'next/image';
 import { ClientType } from '../client-type/ClientType';

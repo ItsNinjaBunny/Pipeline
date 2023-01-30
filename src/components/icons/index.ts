@@ -10,3 +10,5 @@ export * from './EyeSlashIcon';
 export * from './UpDownArrowIcon';
 export * from './HorizontalAdjustmentBarIcon';
 export * from './VerticalAdjustmentBarIcon';
+export * from './ComputerIcon';
+export * from './ArrowLeftIcon';
