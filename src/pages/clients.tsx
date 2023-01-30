@@ -1,8 +1,8 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
-import { Navigation } from '../components/navigation/Navigation';
-import { VerticalAdjustmentBarIcon, CirclePlusIcon, UpDownArrowIcon } from '../components';
-import { Filter, Data, ClientManager, Card } from '../features';
+import { Navigation } from 'src/components/navigation';
+import { VerticalAdjustmentBarIcon, CirclePlusIcon, UpDownArrowIcon } from 'src/components/icons';
+import { Filter, Data, ClientManager, Card } from 'src/features';
 import { useState } from 'react';
 import React from 'react';
 

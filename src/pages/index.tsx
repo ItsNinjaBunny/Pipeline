@@ -1,6 +1,6 @@
 import { type NextPage } from 'next';
 import Head from 'next/head'
-import { Navigation } from '../components/navigation/Navigation';
+import { Navigation } from 'src/components/navigation';
 
 const Dashboard: NextPage = () => {
 

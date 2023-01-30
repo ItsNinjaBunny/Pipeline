@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useOutside } from '../../../hooks/useOutside';
+import { useOutside } from 'src/hooks';
 
 type Props = {
   settings: boolean;
@@ -28,7 +28,7 @@ export const Settings = ({ settings, setSettings }: Props) => {
         <ul className='divide-y-2 px-4 divide-gray-400'>
           {
             AccountSettings.map((setting) => {
-              if (setting.name !== 'Logout')
+              if(setting.name !== 'Logout')
                 return (
                   <li className='py-1' key={setting.name}>
                     <Link href={setting.href} >{setting.name}</Link>
