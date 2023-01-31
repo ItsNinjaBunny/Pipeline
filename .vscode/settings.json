@@ -1,42 +1,10 @@
 {
-  "editor.fontFamily": "",
-  // Controls the font size.
-  // Controls the line height.
-  "editor.lineHeight": 0,
-  // Controls visibility of line numbers
-  // Controls visibility of the glyph margin
-  "editor.glyphMargin": false,
-  // Controls the rendering size of tabs in characters. Accepted values: "auto", 2, 4, 6, etc. If set to "auto", the value will be guessed when a file is opened.
-  "editor.tabSize": 2,
-  // Controls if the editor will insert spaces for tabs. Accepted values:  "auto", true, false. If set to "auto", the value will be guessed when a file is opened.
-  "editor.insertSpaces": 2,
-  // Controls if selections have rounded corners
-  "editor.roundedSelection": true,
-  // Controls if the editor will scroll beyond the last line
-  "editor.scrollBeyondLastLine": true,
-  // Controls after how many characters the editor will wrap to the next line. Setting this to 0 turns on viewport width wrapping
-  "editor.wrappingColumn": 300,
-  // Controls the indentation of wrapped lines. Can be one of 'none', 'same' or 'indent'.
-  "editor.wrappingIndent": "same",
-  // A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
-  "editor.mouseWheelScrollSensitivity": 1,
-  // Controls if quick suggestions should show up or not while typing
-  // Controls the delay in ms after which quick suggestions will show up
-  "editor.quickSuggestionsDelay": 10,
-  // Controls if the editor should automatically close brackets after opening them
-  // Controls if the editor should automatically format the line after typing
-  "editor.formatOnType": false,
-  // Controls if suggestions should automatically show up when typing trigger characters
-  "editor.suggestOnTriggerCharacters": true,
   // Controls whether the editor should highlight similar matches to the selection
   "editor.selectionHighlight": true,
   // Controls the number of decorations that can show up at the same position in the overview ruler
   "editor.overviewRulerLanes": 3,
   // Controls if the cursor should be hidden in the overview ruler.
   "editor.hideCursorInOverviewRuler": false,
-  // Controls whether the editor should render whitespace characters
-  "editor.renderWhitespace": false,
-  // Controls if the editor shows reference information for the modes that support it
   "editor.referenceInfos": true,
   //-------- Window configuration --------
   // When enabled, will open files in a new window instead of reusing an existing instance.
@@ -52,7 +20,7 @@
   // The default character set encoding to use when reading and writing files.
   "files.encoding": "utf8",
   // When enabled, will trim trailing whitespace when you save a file.
-  "files.trimTrailingWhitespace": false,
+  "files.trimTrailingWhitespace": true,
   //-------- File Explorer configuration --------
   // Maximum number of working files to show before scrollbars appear.
   "explorer.workingFiles.maxVisible": 9,
@@ -251,7 +219,6 @@
   "eslint.enable": false,
   // The eslint options object to provide args to the eslint command.
   "eslint.options": {},
-  "editor.formatOnSave": true,
   "typescript.updateImportsOnFileMove.enabled": "always",
   "typescript.preferences.quoteStyle": "single",
   "workbench.startupEditor": "none",
