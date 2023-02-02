@@ -12,3 +12,5 @@ export * from './HorizontalAdjustmentBarIcon';
 export * from './VerticalAdjustmentBarIcon';
 export * from './ComputerIcon';
 export * from './ArrowLeftIcon';
+export * from './FacebookIcon';
+export * from './GoogleIcon';

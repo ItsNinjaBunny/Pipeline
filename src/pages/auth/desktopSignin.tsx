@@ -6,14 +6,21 @@ import {
 } from "next-auth/react";
 import { type InferGetServerSidePropsType } from "next";
 import { type CtxOrReq } from "next-auth/client/_utils";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Input } from "postcss";
 import Typewriter from "src/features/auth/components/TypeWriter";
+import { LockClosedIcon } from '@heroicons/react/24/outline';
+import { FacebookIcon, GoogleIcon, UserCircleIcon } from 'src/components';
+import Image from 'next/image';
+import logo from 'public/logo.png';
+
 const DesktopSignIn = ({
-  providers,
+  providers, credentials, csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const { data: session } = useSession();
   const router = useRouter();
   const strings = [
@@ -29,28 +36,22 @@ const DesktopSignIn = ({
     "Discover the power of seamless integration with our CRM's wide range of integrations.",
   ];
 
-  // useEffect(() => {
-  //   if (session) router.push("/");
-  // });
+  console.log('session', session);
 
   const handleButton = (provider: ClientSafeProvider) => {
-    return (
-      <button
-        className={`relative -bottom-12 min-w-[200px] max-w-[300px] rounded
-    bg-slate-300 px-4 py-2 duration-300 hover:bg-slate-300/70`}
-        key={provider.id}
-        onClick={() => signIn(provider.id)}
-      >
-        Sign into {provider.name}
-        {providers ? (
-          Object.values(providers).map((provider) => {
-            return handleButton(provider);
-          })
-        ) : (
-          <></>
-        )}
-      </button>
-    );
+    if(provider.name === 'Credentials') return;
+
+    return (<button key={provider.id} onClick={() => void signIn(provider.id)}>
+      {
+        provider.name === "Google" ? (
+          <GoogleIcon className="w-8 h-8" />
+        )
+          : provider.name === "Facebook" ? (
+            <FacebookIcon className="w-[34px] h-[34px]" />
+          ) : undefined
+      }
+    </button>
+    )
   };
 
   return (
@@ -65,69 +66,69 @@ const DesktopSignIn = ({
             WELCOME TO
           </h1>
 
-          <img
+          <Image
+            priority={true}
             className=" h-[13vh] w-[32%] py-4"
-            src="https://dewey.tailorbrands.com/production/brand_version_mockup_image/880/8098560880_57a7f77a-9a32-41af-bb28-978376dbeaf8.png?cb=1675138693"
+            width={300}
+            height={106}
+            alt=''
+            src={logo}
           />
           <form
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
-              console.log("saved");
+
             }}
             className=" flex  w-[100%] flex-col py-10"
           >
+            {/* <input name='csrfToken' type='hidden' defaultValue={csrfToken} /> */}
             <div className="input-box mi-auto t">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="float-left h-8 w-8"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
+              <UserCircleIcon className='float-left w-8 h-8' />
 
               <input
                 className="input float-left"
                 type="text"
                 placeholder="Username"
+                onChange={e => setEmail(e.target.value)}
               ></input>
             </div>
             <div className="input-box mi-auto">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="float-left h-7 w-8"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                />
-              </svg>
-
+              <LockClosedIcon className='float-left w-8 h-8' />
               <input
                 className="input float-left"
                 type="password"
                 placeholder="Password"
+                onChange={e => setPassword(e.target.value)}
               ></input>
             </div>
-
-            <button type="submit" className="login-button mi-auto">
+            <button type='submit' className="duration-200 ease-linear rounded-full login-button mi-auto">
               Login
             </button>
           </form>
+          <div className='flex flex-col justify-center items-center space-y-8'>
+            <p className='font-medium tracking-wide'>Don't have an account?
+              <span className='text-blue-700 tracking-wider font-semibold'> Sign Up!</span>
+            </p>
+
+            <div className='flex flex-row w-full justify-center items-center'>
+              <span className=''>OR</span>
+            </div>
+
+            <div className='flex flex-col justify-center items-center space-y-4'>
+              <p className='text-gray-600'>Continue with social media</p>
+              <div className='flex flex-row w-full items-center justify-center space-x-8'>
+                {
+                  providers ? Object.values(providers).map(provider => {
+                    return handleButton(provider)
+                  }) : <></>
+                }
+              </div>
+            </div>
+          </div>
+
         </div>
         <div className="content-pane bg-slate-900">
-          <Typewriter strings={strings}></Typewriter>
+          <Typewriter strings={strings} />
         </div>
       </div>
     </div>
@@ -136,9 +137,12 @@ const DesktopSignIn = ({
 export const getServerSideProps = async (context: CtxOrReq | undefined) => {
   const providers = await getProviders();
   const csrfToken = await getCsrfToken(context);
+  const credentials = providers?.credentials;
   return {
-    props: { providers, csrfToken },
+    props: { providers, credentials, csrfToken },
   };
 };
 
 export default DesktopSignIn;
+
+
