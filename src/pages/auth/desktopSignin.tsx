@@ -105,7 +105,7 @@ const DesktopSignIn = ({
             </div>
             <button
               type="submit"
-              className="login-button mi-auto rounded-full text-2xl "
+              className="login-button mi-auto rounded-full text-xl "
             >
               Login
             </button>
