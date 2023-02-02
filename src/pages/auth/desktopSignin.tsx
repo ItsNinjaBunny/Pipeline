@@ -11,13 +11,14 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { Input } from "postcss";
 import Typewriter from "src/features/auth/components/TypeWriter";
-import { LockClosedIcon } from '@heroicons/react/24/outline';
-import { FacebookIcon, GoogleIcon, UserCircleIcon } from 'src/components';
-import Image from 'next/image';
-import logo from 'public/logo.png';
+import { LockClosedIcon } from "@heroicons/react/24/outline";
+import { FacebookIcon, GoogleIcon, UserCircleIcon } from "src/components";
+import Image from "next/image";
+import logo from "public/logo.png";
 
 const DesktopSignIn = ({
-  providers, credentials, csrfToken,
+  providers,
+  csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -36,96 +37,104 @@ const DesktopSignIn = ({
     "Discover the power of seamless integration with our CRM's wide range of integrations.",
   ];
 
-  console.log('session', session);
+  console.log("session", session);
 
   const handleButton = (provider: ClientSafeProvider) => {
-    if(provider.name === 'Credentials') return;
+    if (provider.name === "Credentials") return;
 
-    return (<button key={provider.id} onClick={() => void signIn(provider.id)}>
-      {
-        provider.name === "Google" ? (
-          <GoogleIcon className="w-8 h-8" />
-        )
-          : provider.name === "Facebook" ? (
-            <FacebookIcon className="w-[34px] h-[34px]" />
-          ) : undefined
-      }
-    </button>
-    )
+    return (
+      <button key={provider.id} onClick={() => void signIn(provider.id)}>
+        {provider.name === "Google" ? (
+          <GoogleIcon className="h-8 w-8" />
+        ) : provider.name === "Facebook" ? (
+          <FacebookIcon className="h-[34px] w-[34px]" />
+        ) : undefined}
+      </button>
+    );
   };
 
   return (
     <div className="body bg-slate-900">
-      <div className="square"></div>
-      <div className="square-flipped"></div>
+      <div className="absolute h-1/2  w-full bg-white">
+        <div className="float-left h-full w-1/2 bg-slate-900"></div>
+        <div className="float-right h-full w-[48.7%] skew-x-12 bg-[white]"></div>
+      </div>
+      <div className="absolute top-1/2 h-1/2 w-full scale-y-[-1] bg-white">
+        <div className="float-left h-full w-1/2 bg-slate-900"></div>
+        <div className="float-right h-full w-[48.7%] skew-x-12 bg-[white]"></div>
+      </div>
       <div className="content-box">
         <div className="content-pane">
           <h1
-            className={`mi-auto mt-[5vh] text-[1.1vw]  font-medium leading-10 tracking-wider`}
+            className={`mi-auto mt-[5vh] text-lg font-medium leading-10 tracking-wider`}
           >
             WELCOME TO
           </h1>
 
           <Image
             priority={true}
-            className=" h-[13vh] w-[32%] py-4"
-            width={300}
-            height={106}
-            alt=''
+            className=" h-[10vh] w-[31%]"
+            alt=""
             src={logo}
           />
           <form
             onSubmit={async (e) => {
               e.preventDefault();
-
             }}
-            className=" flex  w-[100%] flex-col py-10"
+            className=" flex  w-[100%] flex-col content-center"
           >
             {/* <input name='csrfToken' type='hidden' defaultValue={csrfToken} /> */}
             <div className="input-box mi-auto t">
-              <UserCircleIcon className='float-left w-8 h-8' />
+              <UserCircleIcon className="float-left h-8 w-8" />
 
               <input
                 className="input float-left"
                 type="text"
                 placeholder="Username"
-                onChange={e => setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
               ></input>
             </div>
             <div className="input-box mi-auto">
-              <LockClosedIcon className='float-left w-8 h-8' />
+              <LockClosedIcon className="float-left h-8 w-8" />
               <input
                 className="input float-left"
                 type="password"
                 placeholder="Password"
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               ></input>
             </div>
-            <button type='submit' className="duration-200 ease-linear rounded-full login-button mi-auto">
+            <button
+              type="submit"
+              className="login-button mi-auto rounded-full text-2xl "
+            >
               Login
             </button>
           </form>
-          <div className='flex flex-col justify-center items-center space-y-8'>
-            <p className='font-medium tracking-wide'>Don't have an account?
-              <span className='text-blue-700 tracking-wider font-semibold'> Sign Up!</span>
-            </p>
 
-            <div className='flex flex-row w-full justify-center items-center'>
-              <span className=''>OR</span>
-            </div>
+          <p className="mt-[3%] font-medium tracking-wide">
+            Don't have an account?
+            <span className="font-semibold tracking-wider text-blue-700">
+              {" "}
+              Sign Up!
+            </span>
+          </p>
 
-            <div className='flex flex-col justify-center items-center space-y-4'>
-              <p className='text-gray-600'>Continue with social media</p>
-              <div className='flex flex-row w-full items-center justify-center space-x-8'>
-                {
-                  providers ? Object.values(providers).map(provider => {
-                    return handleButton(provider)
-                  }) : <></>
-                }
-              </div>
-            </div>
+          <div className="mt-[1%] flex w-full flex-row items-center justify-center">
+            <div className="h-[0.5%] w-[18%] bg-slate-900"></div>
+            <span className="m-[1%] text-lg">OR</span>
+            <div className="h-[0.5%] w-[18%] bg-slate-900"></div>
           </div>
 
+          <p className="mt-[2%] text-gray-600">Continue with social media</p>
+          <div className="mt-[3%] flex w-full flex-row items-center justify-center space-x-8">
+            {providers ? (
+              Object.values(providers).map((provider) => {
+                return handleButton(provider);
+              })
+            ) : (
+              <></>
+            )}
+          </div>
         </div>
         <div className="content-pane bg-slate-900">
           <Typewriter strings={strings} />
@@ -139,10 +148,8 @@ export const getServerSideProps = async (context: CtxOrReq | undefined) => {
   const csrfToken = await getCsrfToken(context);
   const credentials = providers?.credentials;
   return {
-    props: { providers, credentials, csrfToken },
+    props: { providers, csrfToken },
   };
 };
 
 export default DesktopSignIn;
-
-

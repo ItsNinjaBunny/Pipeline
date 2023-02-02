@@ -52,15 +52,15 @@
 
   .content-pane {
     width: 50%;
-    height: 100vh;
-    max-height: 100vh;
+    height: 100%;
+    
     background-color: rgb(203 213 225 / 0.9);
     position: relative;
     float: left;
     display: flex;
     flex-direction: column;
     align-self: center;
-
+    align-content: center;
     align-items: center;
 
 
@@ -68,27 +68,6 @@
 
 
 
-  .square {
-    width: 60%;
-    display: flex;
-    left: 60.5%;
-    height: 100%;
-    position: absolute;
-
-    background-color: rgb(203 213 225);
-    transform: skewX(30deg);
-  }
-
-  .square-flipped {
-    width: 60%;
-    display: flex;
-    left: 60.5%;
-    height: 100%;
-    position: absolute;
-
-    background-color: rgb(203 213 225);
-    transform: skewX(-30deg);
-  }
 
   .mi-auto {
     margin-inline: auto;
@@ -98,8 +77,8 @@
   .input-box {
     position: relative;
 
-    padding: .5%;
-    margin-top: 15px;
+    padding: 1%;
+    margin-top: 3%;
     border-top: 0.1vw solid transparent;
     border-right: 0.1vw solid transparent;
     border-left: 0.1vw solid transparent;
@@ -161,10 +140,10 @@
     max-height: 30%;
     width: 60%;
     background-color: black;
-
+    
     color: white;
-    border-radius: 2vw;
-    margin-top: 5%;
+    
+    margin-top: 3%;
     transition: all 0.3s ease;
     line-height: 24px;
     padding: .8%;
