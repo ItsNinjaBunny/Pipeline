@@ -62,6 +62,8 @@
   .start-left2{
     animation: start-left2 1s;
     transition: 0.7s;
+    
+    animation-fill-mode: forwards;
   }
 
   .color{
@@ -198,7 +200,7 @@
 
   @keyframes start-left{
     0%{
-      left:-50%;
+      left:-100%;
     }
     100%{
       left:50%;
@@ -206,10 +208,10 @@
   }
   @keyframes start-left2{
     0%{
-      left:-40%;
+      left:-10%;
     }
     100%{
-      left:60.9%;
+      left:150%;
     }
   }
   @keyframes fade{

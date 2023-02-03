@@ -54,13 +54,11 @@ const DesktopSignIn = ({
   };
 
   return (
-    <div className="body absolute bg-slate-900">
-      <div className=" start-left color absolute left-1/2 top-[-37.33%] h-full w-full skew-x-[30deg]"></div>
-      <div
-        className="start-left2 color2 absolute
-      left-[60.9%] top-0 z-[1] h-full w-[120%]"
-      ></div>
-      <div className="start-left color absolute left-1/2 top-[37.5%] h-full w-full skew-x-[-30deg]"></div>
+    <div className="body color2 absolute">
+      <div className=" color3 absolute  top-0 h-full w-full"></div>
+      <div className=" start-left color2 absolute left-1/2 top-[-37.33%] h-full w-full skew-x-[30deg]"></div>
+      <div className=" start-left2 color2 absolute left-[150%] h-full w-1/4"></div>
+      <div className="start-left color2 absolute left-1/2 top-[37.5%] h-full w-full skew-x-[-30deg]"></div>
       <div className="content-box z-10">
         <div className="content-pane">
           <h1
