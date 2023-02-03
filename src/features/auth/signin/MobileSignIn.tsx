@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Input } from '../components';
 import { isBlank } from '../functions';
 import { useRouter } from 'next/router';
-import { login } from '../functions/login';
+import { login, decodeJwt } from '../functions';
+import { GoogleLogin } from '@react-oauth/google';
+import { loginWithGoogle } from '../functions/login.with.google';
 
 type Props = {
   isSignIn: boolean;
@@ -71,6 +73,16 @@ export const MobileSignIn = ({ isSignIn, setIsSignIn }: Props) => {
           </span>
         </p>
         <p className='relative text-sm text-gray-600 cursor-pointer'>Forgot Password?</p>
+      </div>
+      <div className='flex justify-center'>
+        <GoogleLogin
+          onSuccess={response => {
+            loginWithGoogle(response.credential);
+          }}
+          onError={() => console.log('login failed')}
+
+        />
+
       </div>
     </div>
   );

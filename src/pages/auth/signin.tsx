@@ -11,7 +11,7 @@ const SignIn = () => {
   }, []);
 
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen bg-slate-900 flex justify-center items-center'>
       {
         isSignIn ?
           <MobileSignIn isSignIn={isSignIn} setIsSignIn={setIsSignIn} /> :
