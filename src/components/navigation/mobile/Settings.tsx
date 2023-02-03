@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useOutside } from 'src/hooks';
+import React from 'react';
 
 type Props = {
   settings: boolean;
