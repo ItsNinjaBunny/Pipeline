@@ -8,8 +8,8 @@ export const Navigation = () => {
 
   return (
     <>
-      <DesktopNavigation selected={selected} links={NavigationLinks} className={`md:flex hidden`} />
-      <MobileNavigation selected={selected} className={`md:hidden`} links={NavigationLinks} />
+      <DesktopNavigation selected={selected} links={NavigationLinks} className={`lg:flex hidden`} />
+      <MobileNavigation selected={selected} className={`lg:hidden`} links={NavigationLinks} />
     </>
   )
 }

@@ -10,7 +10,7 @@ type Props = {
 }
 
 
-export const SignIn = ({ isSignIn, setIsSignIn }: Props) => {
+export const MobileSignIn = ({ isSignIn, setIsSignIn }: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -22,8 +22,6 @@ export const SignIn = ({ isSignIn, setIsSignIn }: Props) => {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
-        'credentials': 'include',
-        'Access-Control-Allow-Credentials': true
       },
     });
 
@@ -61,8 +59,8 @@ export const SignIn = ({ isSignIn, setIsSignIn }: Props) => {
   }
 
   return (
-    <div className='flex flex-col relative items-center justify-center 
-      space-y-4 rounded mx-8 sm:mx-24 px-8 py-4 w-full bg-slate-200/80 
+    <div className='flex flex-col relative items-center justify-center
+      space-y-4 rounded mx-8 sm:mx-24 px-8 py-4 w-full bg-slate-200/80
       shadow-slate-500 shadow-xl'>
       <h1 className='text-4xl py-2'>Pipeline</h1 >
       <Input type='text'
@@ -78,7 +76,7 @@ export const SignIn = ({ isSignIn, setIsSignIn }: Props) => {
           px-1 border-b-2 border-slate-900'
       />
       <button onClick={handleLogin}
-        className='w-full py-2 bg-slate-900 font-medium 
+        className='w-full py-2 bg-slate-900 font-medium
         tracking-wide text-white/90 rounded'>
         Sign In
       </button>

@@ -20,9 +20,6 @@ bg-slate-200/90`}>
               <li key={link.name}>
                 <Link className='relative duration-200 flex flex-col items-center justify-center text-gray-500 hover:text-black' href={link.href}>
                   {link.icon}
-                  {/* <Tooltip text={link.name} className={`relative px - 4 bg - red - 500 w - 4 h - `} /> */}
-                  {/* <span className='group-hover:opacity-100 tracking-wide
-                    font-medium opacity-0 duration-700'>{link.name}</span> */}
                   <span>{link.name}</span>
                 </Link>
               </li>
