@@ -54,16 +54,14 @@ const DesktopSignIn = ({
   };
 
   return (
-    <div className="body bg-slate-900">
-      <div className="absolute h-1/2  w-full bg-white">
-        <div className="float-left h-full w-1/2 bg-slate-900"></div>
-        <div className="float-right h-full w-[48.7%] skew-x-12 bg-[white]"></div>
-      </div>
-      <div className="absolute top-1/2 h-1/2 w-full scale-y-[-1] bg-white">
-        <div className="float-left h-full w-1/2 bg-slate-900"></div>
-        <div className="float-right h-full w-[48.7%] skew-x-12 bg-[white]"></div>
-      </div>
-      <div className="content-box">
+    <div className="body absolute bg-slate-900">
+      <div className=" start-left color absolute left-1/2 top-[-37.33%] h-full w-full skew-x-[30deg]"></div>
+      <div
+        className="start-left2 color2 absolute
+      left-[60.9%] top-0 z-[1] h-full w-[120%]"
+      ></div>
+      <div className="start-left color absolute left-1/2 top-[37.5%] h-full w-full skew-x-[-30deg]"></div>
+      <div className="content-box z-10">
         <div className="content-pane">
           <h1
             className={`mi-auto mt-[5vh] text-lg font-medium leading-10 tracking-wider`}
@@ -73,7 +71,7 @@ const DesktopSignIn = ({
 
           <Image
             priority={true}
-            className=" h-[10vh] w-[31%]"
+            className=" h-[10vh] w-[30vh]"
             alt=""
             src={logo}
           />
@@ -136,7 +134,7 @@ const DesktopSignIn = ({
             )}
           </div>
         </div>
-        <div className="content-pane bg-slate-900">
+        <div className="content-pane color3 ">
           <Typewriter strings={strings} />
         </div>
       </div>
