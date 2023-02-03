@@ -1,7 +1,5 @@
 import { type AppType } from "next/app";
 
-import { api } from "../utils/api";
-
 import "../styles/globals.css";
 
 const MyApp: AppType = ({
@@ -13,4 +11,4 @@ const MyApp: AppType = ({
   );
 };
 
-export default api.withTRPC(MyApp);
+export default MyApp;
