@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { Input } from '../components';
-import { request, isBlank } from '../functions';
-import { LoginCredentials } from '../types';
+import { isBlank } from '../functions';
 import { useRouter } from 'next/router';
+import { login } from '../functions/login';
 
 type Props = {
   isSignIn: boolean;
   setIsSignIn: CallableFunction;
 }
-
 
 export const MobileSignIn = ({ isSignIn, setIsSignIn }: Props) => {
   const [username, setUsername] = useState('');
@@ -17,43 +16,25 @@ export const MobileSignIn = ({ isSignIn, setIsSignIn }: Props) => {
 
   const router = useRouter();
 
-  const test = async () => {
-    const data = await request(`${process.env.host}/auth/test`, {
-      method: 'get',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    console.log(data);
-  }
-
   const handleLogin = async () => {
     if(!isBlank(username, password)) {
       setError('Please fill out all fields');
       return;
     }
 
-    const data = await request<LoginCredentials>(`${process.env.host}/auth/login`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: username.toLowerCase(),
-        password: password,
-      }),
-    });
+    const response = await login({ email: username, password });
 
-    console.log(data);
 
-    if((!data.success) && (data.error && data.status)) {
-      setError(data.error);
-      console.error(data);
+    console.log(response);
+
+    if(response.error && response.status !== 200) {
+      setError(response.error);
+      return;
     }
 
-    if((data.success) && (data.accessToken)) {
-      localStorage.setItem('accessToken', data.accessToken);
+    if(response.status === 200) {
+      localStorage.setItem('accessToken', response.accessToken);
+      localStorage.setItem('refreshToken', response.refreshToken);
       return router.push('/');
     }
   }

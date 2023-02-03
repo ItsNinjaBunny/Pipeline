@@ -4,13 +4,12 @@ export const request = async <T>(url: string, options: {
   headers?: any,
   body?: any,
 }) => {
-  const { method, ...option } = options;
+  const { method, headers, body } = options;
   const response = await fetch(url, {
     method: method.toUpperCase(),
-    ...option,
+    headers: headers ? headers : {},
+    body: body ? JSON.stringify(body) : undefined,
   });
-
-  console.log('response', response);
 
   return await <T>response.json();
 }
