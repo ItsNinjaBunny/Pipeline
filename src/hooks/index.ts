@@ -1,1 +1,1 @@
-export * from './useOutside';
+export * from "./useOutside";

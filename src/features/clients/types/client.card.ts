@@ -1,4 +1,4 @@
-export type ClientType = 'lead' | 'client' | 'other';
+export type ClientType = "lead" | "client" | "other";
 
 export type Card = {
   id: string;
@@ -7,4 +7,4 @@ export type Card = {
   email: string;
   phone: string;
   type: ClientType;
-}
+};

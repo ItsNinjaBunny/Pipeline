@@ -1,4 +1,1 @@
-
-export type RegisterCredentials = {
-
-}
+export type RegisterCredentials = {};
