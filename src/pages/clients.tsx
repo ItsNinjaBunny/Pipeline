@@ -2,7 +2,7 @@ import { type NextPage } from 'next';
 import Head from 'next/head';
 import { Navigation } from 'src/components/navigation';
 import { VerticalAdjustmentBarIcon, CirclePlusIcon, UpDownArrowIcon } from 'src/components/icons';
-import { Filter, Data, ClientManager, Card } from 'src/features';
+import { Filter, Data, ClientManager } from 'src/features';
 import { useState } from 'react';
 import React from 'react';
 
@@ -11,8 +11,6 @@ const ClientsPage: NextPage = () => {
   const [selected, setSelected] = useState(false);
 
   const toggleFilter = () => setOpenFilter(prev => !prev);
-
-  const classS = 'fixed top-0 duration-700 '
 
   return (
     <>

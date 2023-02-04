@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { type NavigationLink } from '../types';
 import Link from 'next/link';
 import { Settings } from './Settings';
-import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 
 type Props = {
@@ -13,7 +12,6 @@ type Props = {
 
 export const MobileNavigation = ({ selected, links, className }: Props) => {
   const [settings, setSettings] = useState(false);
-  const { data: session } = useSession();
 
   const toggleSettings = () => setSettings((prev) => !prev);
   const closeSettings = () => setSettings(false);
@@ -32,19 +30,19 @@ export const MobileNavigation = ({ selected, links, className }: Props) => {
                 )
               }
 
-              return (
-                <li onClick={toggleSettings} key={link.name}
-                  className={`${settings ? 'cursor-pointer pointer-events-none' : 'cursor-pointer pointer-events-auto '}`} >
-                  {
-                    session?.user?.image ? (
-                      <Image className='w-7 h-7 md:w-9 sm:h-9 rounded-full object-cover'
-                        priority={true} width={36} height={36} src={session?.user?.image} alt='' />
-                    ) : (
-                      link.icon
-                    )
-                  }
-                </li>
-              )
+              // return (
+              //   <li onClick={toggleSettings} key={link.name}
+              //     className={`${settings ? 'cursor-pointer pointer-events-none' : 'cursor-pointer pointer-events-auto '}`} >
+              //     {
+              //       session?.user?.image ? (
+              //         <Image className='w-7 h-7 md:w-9 sm:h-9 rounded-full object-cover'
+              //           priority={true} width={36} height={36} src={session?.user?.image} alt='' />
+              //       ) : (
+              //         link.icon
+              //       )
+              //     }
+              //   </li>
+              // )
             })
           }
         </ul>

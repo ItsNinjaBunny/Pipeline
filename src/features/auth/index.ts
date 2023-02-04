@@ -1,2 +1,2 @@
-export * from './signin/SignIn';
+export * from './signin/MobileSignIn';
 export * from './signup/SignUp';
