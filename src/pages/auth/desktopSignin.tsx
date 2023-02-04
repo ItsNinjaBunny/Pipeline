@@ -1,29 +1,15 @@
-import {
-  signIn,
-  getCsrfToken,
-  getProviders,
-  type ClientSafeProvider,
-} from "next-auth/react";
-import { type InferGetServerSidePropsType } from "next";
-import { type CtxOrReq } from "next-auth/client/_utils";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
-import { Input } from "postcss";
 import Typewriter from "src/features/auth/components/TypeWriter";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
 import { FacebookIcon, GoogleIcon, UserCircleIcon } from "src/components";
 import Image from "next/image";
 import logo from "public/logo.png";
 
-const DesktopSignIn = ({
-  providers,
-  csrfToken,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const DesktopSignIn = () => {
   const [email, setEmail] = useState<string>("");
   const [signUp, setSignup] = useState<string>("show-sign-in");
   const [password, setPassword] = useState<string>("");
-  const { data: session } = useSession();
   const router = useRouter();
   const strings = [
     "Streamline your sales process with our powerful CRM tools.",
@@ -37,22 +23,6 @@ const DesktopSignIn = ({
     "Experience the freedom and flexibility of our fully customizable CRM platform.",
     "Discover the power of seamless integration with our CRM's wide range of integrations.",
   ];
-
-  console.log("session", session);
-
-  const handleButton = (provider: ClientSafeProvider) => {
-    if (provider.name === "Credentials") return;
-
-    return (
-      <button key={provider.id} onClick={() => void signIn(provider.id)}>
-        {provider.name === "Google" ? (
-          <GoogleIcon className="h-8 w-8" />
-        ) : provider.name === "Facebook" ? (
-          <FacebookIcon className="h-[34px] w-[34px]" />
-        ) : undefined}
-      </button>
-    );
-  };
 
   return (
     <div className="body color2 absolute">
@@ -132,15 +102,7 @@ const DesktopSignIn = ({
           </div>
 
           <p className="mt-[2%] text-gray-600">Continue with social media</p>
-          <div className="mt-[3%] flex w-full flex-row items-center justify-center space-x-8">
-            {providers ? (
-              Object.values(providers).map((provider) => {
-                return handleButton(provider);
-              })
-            ) : (
-              <></>
-            )}
-          </div>
+          <div className="mt-[3%] flex w-full flex-row items-center justify-center space-x-8"></div>
         </div>
         <div
           className={`${
@@ -212,14 +174,6 @@ const DesktopSignIn = ({
       </div>
     </div>
   );
-};
-export const getServerSideProps = async (context: CtxOrReq | undefined) => {
-  const providers = await getProviders();
-  const csrfToken = await getCsrfToken(context);
-  const credentials = providers?.credentials;
-  return {
-    props: { providers, csrfToken },
-  };
 };
 
 export default DesktopSignIn;
