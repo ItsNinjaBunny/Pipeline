@@ -1,11 +1,20 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
-export const decodeJwt = <T>(token: string | undefined) => {
-  if(!token) return null;
+type JwtType = {
+  header: {
+    alg: string;
+    typ: string;
+  };
+  payload: {
+    exp: number;
+    iat: number;
+    id: string;
+  };
+  signature: string;
+};
 
-  const decoded = <T>jwt.decode(token, { complete: true });
-
-  if(!decoded) return null;
+export const decodeJwt = (token: string) => {
+  const decoded = <JwtType>jwt.decode(token, { complete: true });
 
   return decoded;
-}
+};

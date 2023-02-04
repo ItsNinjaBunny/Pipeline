@@ -1,6 +1,7 @@
 {
   // Controls whether the editor should highlight similar matches to the selection
   "editor.selectionHighlight": true,
+  "editor.formatOnSave": true,
   // Controls the number of decorations that can show up at the same position in the overview ruler
   "editor.overviewRulerLanes": 3,
   // Controls if the cursor should be hidden in the overview ruler.
@@ -232,9 +233,9 @@
     "javascriptreact": "javascriptreact",
     "typescript": "typescript",
     "typescriptreact": "typescriptreact",
-    "html": "HTML",
+    "html": "HTML"
   },
   "explorer.compactFolders": false,
   "editor.matchBrackets": "never",
-  "terminal.integrated.defaultProfile.windows": "Command Prompt",
+  "terminal.integrated.defaultProfile.windows": "Command Prompt"
 }

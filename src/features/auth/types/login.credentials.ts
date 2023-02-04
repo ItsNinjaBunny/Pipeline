@@ -4,4 +4,4 @@ export type LoginCredentials = {
   success: boolean;
   error?: string;
   status: number;
-}
+};

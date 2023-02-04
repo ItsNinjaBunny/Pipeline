@@ -1,67 +1,67 @@
-import { request } from 'src/functions';
-import { decodeJwt } from './decode.jwt';
+import { request } from "src/functions";
+import { TokenResponse } from "@react-oauth/google";
 
 type GooglePayload = {
-  header: {
-    alg: string;
-    kid: string;
-    typ: string;
-  },
-  payload: {
-    aud: string;
-    azp: string;
-    email: string;
-    email_verified: boolean;
-    exp: number;
-    family_name: string;
-    given_name: string;
-    iat: number;
-    iss: string;
-    jti: string;
-    name: string;
-    nbf: number;
-    picture: string;
-    sub: string;
-  },
-  signature: string;
-}
+  email: string;
+  email_verified: boolean;
+  family_name: string;
+  given_name: string;
+  name: string;
+  picture: string;
+};
 
 type GoogleResponse = {
   error: string | null;
   status: number;
   accessToken: string;
   refreshToken: string;
-}
+};
 
-export const loginWithGoogle = async (token: string | undefined) => {
-  if(!token) return null;
-
-  const data = decodeJwt<GooglePayload>(token);
-
-  if(!data) return null;
-
-  const { header, payload, signature } = data;
-  const { email, email_verified, family_name, given_name, exp, picture, } = payload;
-
-  const response = await request<GoogleResponse>(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login/google`, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: {
-      user: {
-        email,
-        verified: email_verified,
-        lastName: family_name,
-        firstName: given_name,
-        exp,
-        image: picture,
-      }
-    }
-  });
-
-  // make sure to save jwt's inside local storage
+export const loginWithGoogle = async (
+  response: Omit<TokenResponse, "error" | "error_description" | "error_uri">
+) => {
   console.log(response);
+  const { access_token, token_type, scope, ...rest } = response;
 
-  return response;
-}
+  const data = await request<GooglePayload>(
+    "https://www.googleapis.com/oauth2/v1/userinfo?alt=json",
+    {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `${token_type} ${access_token}`,
+      },
+    }
+  );
+
+  console.log(data);
+
+  const { email, email_verified, family_name, given_name, picture } = data;
+
+  const googleResponse = await request<GoogleResponse>(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login/google`,
+    {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        user: {
+          email,
+          verified: email_verified,
+          lastName: family_name,
+          firstName: given_name,
+          image: picture,
+        },
+      },
+    }
+  );
+
+  if (googleResponse.status === 200) {
+    const { accessToken, refreshToken } = googleResponse;
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+  }
+
+  return googleResponse;
+};

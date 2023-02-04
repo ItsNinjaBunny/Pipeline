@@ -1,15 +1,21 @@
-import { request } from 'src/functions';
+import { request } from "src/functions";
 
 type RegisterResponse = {
   error: string;
   status: number;
-}
+};
 
-export const register = async (firstName: string, lastName: string, email: string, phoneNumber: string, password: string) => {
+export const register = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  phoneNumber: string,
+  password: string
+) => {
   return await request<RegisterResponse>(`${process.env.SERVER_URL}/users`, {
-    method: 'post',
+    method: "post",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: {
       user: {
@@ -18,7 +24,7 @@ export const register = async (firstName: string, lastName: string, email: strin
         email,
         phoneNumber,
         password,
-      }
-    }
+      },
+    },
   });
-}
+};
