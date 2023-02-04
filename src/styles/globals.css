@@ -19,6 +19,7 @@
     transition: opacity 0.5s ease-in-out;
     /* @apply opacity-0 duration-700 pointer-events-none; */
   }
+  
 
   .show--clients {
     @apply opacity-100 duration-700;
@@ -43,11 +44,10 @@
   .content-box {
     border-radius: 1.1vw;
     height: 75%;
-    animation: fade 1s;
+    
     transition: 0.7s;
-    opacity:0;
-    animation-fill-mode: forwards;
-    animation-delay: 1s;
+    display: flex;
+    flex-direction: row;
     position: relative;
     top: 12.5%;
     margin-inline: auto;
@@ -76,14 +76,29 @@
     background-color:rgb(15 23 42)!important;
     opacity: 1;
   }
+  .show-sign-in{
+    animation: grow-height 1s;
+  }
+  @keyframes grow-height {
+    0%{
+      top:50%;
+      height:0;
+    }
+    100%{
+      height: 100%;
+    }
+    
+  }
   .content-pane {
     width: 50%;
     height: 100%;
-  
+   top:0;
     background-color: rgb(203 213 225 / 0.9);
     position: relative;
-    float: left;
+   
     display: flex;
+    transition: 0.7s;
+    transition-timing-function: ease-out;
     flex-direction: column;
     align-self: center;
     align-content: center;
@@ -187,39 +202,6 @@
   }
 
 
-  @keyframes change-height {
-    0% {
-      height: 500px;
-    }
+  
 
-    100% {
-      height: 128px;
-    }
-
-  }
-
-  @keyframes start-left{
-    0%{
-      left:-100%;
-    }
-    100%{
-      left:50%;
-    }
-  }
-  @keyframes start-left2{
-    0%{
-      left:-10%;
-    }
-    100%{
-      left:150%;
-    }
-  }
-  @keyframes fade{
-    0%{
-      opacity: 0;
-    }
-    100%{
-      opacity: 1;
-    }
-  }
 }

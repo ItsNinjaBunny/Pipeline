@@ -21,6 +21,7 @@ const DesktopSignIn = ({
   csrfToken,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [email, setEmail] = useState<string>("");
+  const [signUp, setSignup] = useState<string>("show-sign-in");
   const [password, setPassword] = useState<string>("");
   const { data: session } = useSession();
   const router = useRouter();
@@ -59,8 +60,12 @@ const DesktopSignIn = ({
       <div className=" start-left color2 absolute left-1/2 top-[-37.33%] h-full w-full skew-x-[30deg]"></div>
       <div className=" start-left2 color2 absolute left-[150%] h-full w-1/4"></div>
       <div className="start-left color2 absolute left-1/2 top-[37.5%] h-full w-full skew-x-[-30deg]"></div>
-      <div className="content-box z-10">
-        <div className="content-pane">
+      <div className="content-box color2 z-10">
+        <div
+          className={`${
+            signUp == "show-sign-in" ? "show-sign-in" : "opacity-0"
+          } content-pane `}
+        >
           <h1
             className={`mi-auto mt-[5vh] text-lg font-medium leading-10 tracking-wider`}
           >
@@ -109,7 +114,12 @@ const DesktopSignIn = ({
 
           <p className="mt-[3%] font-medium tracking-wide">
             Don't have an account?
-            <span className="font-semibold tracking-wider text-blue-700">
+            <span
+              onClick={() => {
+                setSignup("show-sign-up");
+              }}
+              className="cursor-pointer font-semibold tracking-wider text-blue-700"
+            >
               {" "}
               Sign Up!
             </span>
@@ -132,7 +142,71 @@ const DesktopSignIn = ({
             )}
           </div>
         </div>
-        <div className="content-pane color3 ">
+        <div
+          className={`${
+            signUp == "show-sign-up" ? "top-0 h-full" : " h-[0]"
+          } content-pane absolute `}
+        >
+          <h1
+            className={`mi-auto mt-[5vh] text-lg font-medium leading-10 tracking-wider`}
+          >
+            WELCOME TO
+          </h1>
+
+          <Image
+            priority={true}
+            className=" h-[10vh] w-[30vh]"
+            alt=""
+            src={logo}
+          />
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+            }}
+            className=" flex  w-[100%] flex-col content-center"
+          >
+            {/* <input name='csrfToken' type='hidden' defaultValue={csrfToken} /> */}
+            <div className="input-box mi-auto t">
+              <UserCircleIcon className="float-left h-8 w-8" />
+
+              <input
+                className="input float-left"
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setEmail(e.target.value)}
+              ></input>
+            </div>
+            <div className="input-box mi-auto">
+              <LockClosedIcon className="float-left h-8 w-8" />
+              <input
+                className="input float-left"
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              ></input>
+            </div>
+            <button
+              type="submit"
+              className="login-button mi-auto rounded-full text-xl "
+            >
+              Sign Up
+            </button>
+          </form>
+
+          <p className="mt-[3%] font-medium tracking-wide">
+            Have an account?
+            <span
+              onClick={() => {
+                setSignup("show-sign-in");
+              }}
+              className="cursor-pointer font-semibold tracking-wider text-blue-700"
+            >
+              {" "}
+              Sign In!
+            </span>
+          </p>
+        </div>
+        <div className="content-pane color3 float-right">
           <Typewriter strings={strings} />
         </div>
       </div>
