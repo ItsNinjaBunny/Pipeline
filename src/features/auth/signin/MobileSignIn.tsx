@@ -3,10 +3,8 @@ import { GoogleButton, Input } from "../components";
 import { isBlank } from "../functions";
 import { useRouter } from "next/router";
 import { login } from "../functions";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-import FacebookLogin from "react-facebook-login";
+import { useGoogleLogin } from "@react-oauth/google";
 import { loginWithGoogle } from "../functions/login.with.google";
-import { loginWithFacebook } from "../functions/login.with.facebook";
 
 type Props = {
   isSignIn: boolean;
@@ -100,7 +98,10 @@ export const MobileSignIn = ({ isSignIn, setIsSignIn }: Props) => {
       </div>
       <p>Connect with social media</p>
       <div className="flex justify-center">
-        <GoogleButton onClick={() => handleGoogleLogin()} />
+        <GoogleButton
+          className={{ svg: "h-5 w-5" }}
+          onClick={() => handleGoogleLogin()}
+        />
       </div>
     </div>
   );
