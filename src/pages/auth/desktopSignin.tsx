@@ -30,7 +30,7 @@ const DesktopSignIn = () => {
       <div className=" start-left color2 absolute left-1/2 top-[-37.33%] h-full w-full skew-x-[30deg]"></div>
       <div className=" start-left2 color2 absolute left-[150%] h-full w-1/4"></div>
       <div className="start-left color2 absolute left-1/2 top-[37.5%] h-full w-full skew-x-[-30deg]"></div>
-      <div className="content-box color2 z-10">
+      <div className="content-box z-10">
         <div
           className={`${
             signUp == "show-sign-in" ? "show-sign-in" : "opacity-0"
