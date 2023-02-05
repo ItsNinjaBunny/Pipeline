@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Typewriter from "src/features/auth/components/TypeWriter";
 import { LockClosedIcon } from "@heroicons/react/24/outline";
-import { FacebookIcon, GoogleIcon, UserCircleIcon } from "src/components";
+import { UserCircleIcon } from "src/components";
 import Image from "next/image";
 import logo from "public/logo.png";
 
@@ -168,7 +168,7 @@ const DesktopSignIn = () => {
             </span>
           </p>
         </div>
-        <div className="content-pane color3 float-right">
+        <div className="content-pane color3 move-down float-right">
           <Typewriter strings={strings} />
         </div>
       </div>
