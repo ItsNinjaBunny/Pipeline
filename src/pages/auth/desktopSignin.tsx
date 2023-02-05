@@ -206,7 +206,7 @@ const DesktopSignIn = ({
             </span>
           </p>
         </div>
-        <div className="content-pane color3 float-right">
+        <div className="content-pane right-pane  color3 float-right">
           <Typewriter strings={strings} />
         </div>
       </div>

@@ -40,7 +40,19 @@
     width: 100%;
 
   }
+  .right-pane{
 
+    animation: move-up 1s forwards;
+  }
+  
+  @keyframes move-up {
+    from {
+      top: -100%;
+    }
+    to {
+      top: 0;
+    }
+  }
   .content-box {
     border-radius: 1.1vw;
     height: 75%;
