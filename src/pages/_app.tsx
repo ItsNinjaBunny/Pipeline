@@ -1,20 +1,15 @@
 import { type AppType } from "next/app";
-import { type Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-
-import { api } from "../utils/api";
 
 import "../styles/globals.css";
+import React from "react";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const MyApp: AppType<{ session: Session | null }> = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+const MyApp: AppType = ({ Component, pageProps: { ...pageProps } }) => {
   return (
-    <SessionProvider session={session}>
+    <GoogleOAuthProvider clientId="567585874111-4mbeosqdl6sht4m6vrpnpgcd5ti0r78c.apps.googleusercontent.com">
       <Component {...pageProps} />
-    </SessionProvider>
+    </GoogleOAuthProvider>
   );
 };
 
-export default api.withTRPC(MyApp);
+export default MyApp;
