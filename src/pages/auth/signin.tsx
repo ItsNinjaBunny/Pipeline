@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { MobileSignIn, SignUp } from "src/features";
 
 const SignIn = () => {
-  const [isSignIn, setIsSignIn] = useState(true); // [true, () => {}
+  const [isSignIn, setIsSignIn] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -11,11 +11,11 @@ const SignIn = () => {
   }, []);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-900">
+    <div className="flex w-full bg-slate-200">
       {isSignIn ? (
         <MobileSignIn isSignIn={isSignIn} setIsSignIn={setIsSignIn} />
       ) : (
-        <SignUp isSignIn={isSignIn} setIsSignIn={setIsSignIn} />
+        <SignUp isSignIn={isSignIn} setIsSignIn={() => setIsSignIn} />
       )}
     </div>
   );

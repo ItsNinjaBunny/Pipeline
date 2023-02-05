@@ -1,111 +1,137 @@
 import { useState } from "react";
-import { Input } from "../components";
-import { register } from "../functions";
+import { Circle } from "./components";
+import { PersonalInfo } from "./components/personal.info";
+import { regex } from "src/constants";
 
 type Props = {
   isSignIn: boolean;
-  setIsSignIn: CallableFunction;
+  setIsSignIn: () => void;
 };
 
+const circles = [1, 2, 3, 4];
+
 export const SignUp = ({ isSignIn, setIsSignIn }: Props) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [personalError, setPersonalError] = useState<string[]>([]);
 
-  const handleRegister = async () => {
-    const response = await register(
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password
-    );
+  const [selected, setSelected] = useState(1);
 
-    if (response.status !== 200) throw new Error(response.error);
-
-    setIsSignIn(true);
-
-    console.log(response);
+  const increaseSelected = () => {
+    if (selected < 4) {
+      setSelected(selected + 1);
+    }
   };
 
+  const decreaseSelected = () => {
+    if (selected > 1) {
+      setSelected(selected - 1);
+    }
+  };
+
+  const handleNextStep = () => {
+    switch (selected) {
+      case 1:
+        if (name.length < 3) setPersonalError((prev) => [...prev, "Name"]);
+        if (email.length < 3) setPersonalError((prev) => [...prev, "Email"]);
+        if (phoneNumber.length < 3)
+          setPersonalError((prev) => [...prev, "Phone Number"]);
+        if (password.length < 3)
+          setPersonalError((prev) => [...prev, "Password"]);
+
+        if (
+          name.length > 3 &&
+          regex.email.test(email) &&
+          regex.phoneNumber.test(phoneNumber) &&
+          regex.password.test(password)
+        ) {
+          toNextStep();
+        }
+        break;
+
+      case 2:
+    }
+  };
+
+  const toNextStep = () => {
+    if (personalError.length === 0) increaseSelected();
+  };
+
+  const handlePageChange = () => {
+    switch (selected) {
+      case 1:
+        return (
+          <PersonalInfo
+            name={name}
+            setName={setName}
+            email={email}
+            setEmail={setEmail}
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
+            password={password}
+            setPassword={setPassword}
+            personalError={personalError}
+            setPersonalError={setPersonalError}
+          />
+        );
+    }
+  };
+
+  const handleSubmit = () => console.log("submitted");
+
   return (
-    <div
-      className="relative mx-8 flex w-full flex-col
-    items-center justify-center space-y-4 rounded bg-slate-200/80 px-8 py-4 shadow-xl
-    shadow-slate-500 sm:mx-16"
-    >
-      <h1 className="relative py-2 text-5xl">Pipeline</h1>
-      <div className="flex w-full flex-col space-y-2">
-        <div
-          className="flex-col space-y-2 sm:flex sm:w-full sm:flex-row sm:gap-4
-          sm:space-y-0"
-        >
-          <Input
-            type="text"
-            onChange={setFirstName}
-            value={firstName}
-            label="First Name"
-            className="border-b-2 border-slate-900 bg-transparent px-1
-              pb-0.5 font-medium text-gray-700 outline-none"
-          />
-          <Input
-            type="text"
-            onChange={setLastName}
-            value={lastName}
-            label="Last Name"
-            className="border-b-2 border-slate-900 bg-transparent px-1
-              pb-0.5 font-medium text-gray-700 outline-none"
-          />
-        </div>
-        <div
-          className="flex-col space-y-2 sm:flex sm:w-full sm:flex-row sm:gap-4
-          sm:space-y-0"
-        >
-          <Input
-            type="email"
-            onChange={setEmail}
-            value={email}
-            label="Email"
-            className="border-b-2 border-slate-900 bg-transparent px-1
-              pb-0.5 font-medium text-gray-700 outline-none sm:flex-1"
-          />
-          <Input
-            type="tel"
-            onChange={setPhoneNumber}
-            value={phoneNumber}
-            label="Phone Number"
-            className="border-b-2 border-slate-900 bg-transparent px-1
-              pb-0.5 font-medium text-gray-700 outline-none"
-          />
-        </div>
-        <Input
-          type="password"
-          onChange={setPassword}
-          value={password}
-          label="Password"
-          className="border-b-2 border-slate-900 bg-transparent px-1
-          pb-0.5 font-medium text-gray-700 outline-none"
-        />
-      </div>
-      <button
-        onClick={() => handleRegister()}
-        className="w-full rounded bg-slate-900 py-2
-          font-medium tracking-wide text-white/90"
+    <>
+      <div
+        className="absolute top-0 flex w-full items-center justify-center
+        space-x-8 bg-slate-900 pt-8 pb-16"
       >
-        Sign Up
-      </button>
-      <div className="flex flex-col items-center justify-center space-y-2">
-        <p
-          onClick={() => setIsSignIn((prev: boolean) => !prev)}
-          className="flex cursor-pointer items-center gap-2 text-sm"
-        >
-          Already have an account?
-          <span className="py-0.5 font-medium text-blue-700/90">Sign In!</span>
-        </p>
-        {/* <p className='relative text-sm text-gray-600 cursor-pointer'>Forgot Password?</p> */}
+        {circles.map((circle) => (
+          <Circle key={circle} selected={selected} value={circle} />
+        ))}
       </div>
-    </div>
+
+      <div className="min-h-screen w-full">
+        <section
+          className="relative top-28 left-1/2 w-[90%] -translate-x-1/2 rounded
+          bg-slate-300 shadow-lg shadow-slate-600/70"
+        >
+          {handlePageChange()}
+        </section>
+      </div>
+
+      <div
+        className="absolute bottom-4 left-1/2 flex w-[90%] -translate-x-1/2 items-center
+        rounded bg-slate-300 py-10 shadow-md shadow-slate-500"
+      >
+        {selected > 1 && (
+          <button
+            onClick={decreaseSelected}
+            className="absolute left-4 text-gray-500"
+          >
+            go back
+          </button>
+        )}
+
+        {selected < 4 ? (
+          <button
+            onClick={handleNextStep}
+            className="absolute right-4 rounded bg-slate-900 py-2 px-4 tracking-wide
+            text-slate-200"
+          >
+            Next Step
+          </button>
+        ) : (
+          <button
+            onClick={handleSubmit}
+            className="absolute right-4 rounded bg-slate-900 py-2 px-4 tracking-wide
+            text-slate-200"
+          >
+            submit
+          </button>
+        )}
+      </div>
+    </>
   );
 };
