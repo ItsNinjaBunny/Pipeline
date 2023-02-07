@@ -33,8 +33,8 @@ const DesktopSignIn = () => {
       <div className="content-box z-10">
         <div
           className={`${
-            signUp == "show-sign-in" ? "show-sign-in" : "opacity-0"
-          } content-pane `}
+            signUp == "show-sign-in" ? "top-[0%]" : "top-[-100%]"
+          } content-pane show-sign-in`}
         >
           <h1
             className={`mi-auto mt-[5vh] text-lg font-medium leading-10 tracking-wider`}
@@ -76,7 +76,7 @@ const DesktopSignIn = () => {
             </div>
             <button
               type="submit"
-              className="login-button mi-auto rounded-full text-xl "
+              className="login-button mi-auto rounded-md text-xl "
             >
               Login
             </button>
@@ -106,21 +106,15 @@ const DesktopSignIn = () => {
         </div>
         <div
           className={`${
-            signUp == "show-sign-up" ? "top-0 h-full" : " h-[0]"
+            signUp == "show-sign-up" ? "top-0 h-full" : " top-[100%]"
           } content-pane absolute `}
         >
           <h1
             className={`mi-auto mt-[5vh] text-lg font-medium leading-10 tracking-wider`}
           >
-            WELCOME TO
+            Personal Information
           </h1>
 
-          <Image
-            priority={true}
-            className=" h-[10vh] w-[30vh]"
-            alt=""
-            src={logo}
-          />
           <form
             onSubmit={async (e) => {
               e.preventDefault();
@@ -168,8 +162,31 @@ const DesktopSignIn = () => {
             </span>
           </p>
         </div>
-        <div className="content-pane color3 move-down float-right">
+        <div className="content-pane color3 move-down relative z-[2] float-right overflow-hidden">
           <Typewriter strings={strings} />
+        </div>
+        <div
+          className={`${
+            signUp != "show-sign-up" ? "w-0" : "w-[50%]"
+          } color4 absolute top-0 right-0 z-[3] flex h-full flex-col content-center self-center align-middle `}
+        >
+          <div className="relative top-[40%] flex flex-row content-center space-x-2 self-center align-middle">
+            <div className="flex justify-center rounded-full bg-slate-900 py-1.5 px-4 text-2xl text-[#fff]">
+              <span className="mb-[0.15rem]">1</span>
+            </div>
+            <div className="mt-[2.5vh] h-[.1vh] w-[6vw] bg-slate-900 opacity-50 "></div>
+            <div className="flex justify-center rounded-full bg-slate-900 py-1.5 px-4 text-2xl text-[#fff] opacity-50">
+              <span className="mb-[0.15rem]">2</span>
+            </div>
+            <div className="mt-[2.5vh] h-[.1vh] w-[6vw] bg-slate-900 opacity-50"></div>
+            <div className="flex justify-center rounded-full bg-slate-900 py-1.5 px-4 text-2xl text-[#fff] opacity-50">
+              <span className="mb-[0.15rem] ">3</span>
+            </div>
+            <div className="mt-[2.5vh] h-[.1vh] w-[6vw] bg-slate-900 opacity-50"></div>
+            <div className="flex justify-center rounded-full bg-slate-900 py-1.5 px-4 text-2xl text-[#fff] opacity-50">
+              <span className="mb-[0.15rem]">4</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
