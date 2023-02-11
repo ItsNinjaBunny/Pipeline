@@ -7,7 +7,38 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
       sans-serif;
-    @apply m-0 box-border overflow-hidden p-0;
+    @apply m-0 box-border overflow-x-hidden p-0;
+    scroll-behavior: smooth;
+
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    transition: 0.7s;
+  }
+
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: inherit;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #C4C4C4;
+    border-radius: 1vw;
+    transition: 0.7s;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    transition: 0.7s;
+  }
+  .skill{
+    display: flex;
+    height:6vh;
+    width:100%;
+
   }
 }
 
@@ -36,13 +67,13 @@
     position: absolute;
     height: 100%;
     width: 100%;
-
+    overflow-y: hidden;
   }
 
   .content-box {
     border-radius: 8px;
     height: 75%;
-
+    overflow-y: hidden;
     transition: 0.7s;
     display: flex;
     flex-direction: row;
@@ -56,7 +87,9 @@
     border-top:0.5vw solid rgb(15 23 42);
     border-bottom:0.5vw solid rgb(15 23 42);
   }
-
+  .smooth{
+    transition:0.7s;
+  }
   .start-left{
     animation: start-left 1s  ;
     transition: 0.7s;
@@ -129,14 +162,15 @@
 
     padding: 1%;
     margin-top: 3%;
-    border-top: 0.1vw solid transparent;
-    border-right: 0.1vw solid transparent;
-    border-left: 0.1vw solid transparent;
-    border-bottom: .1vw solid #050505;
+    border-top: 2px solid transparent;
+    border-right: 2px solid transparent;
+    border-left: 2px solid transparent;
+    border-bottom:2px solid #050505;
     background-color: transparent;
-    height: 30%;
+    height: 25%;
     max-height: 30%;
-
+    overflow: hidden;
+    border-radius: 4px;
     width: 60%;
     transition: all 0.1s ease-in-out;
 
@@ -154,23 +188,23 @@
 
   @keyframes border-grow {
     0% {
-      border-left: 0.1vw solid #050505;
+      border-left: 2px solid #050505;
     }
 
     40% {
 
-      border-left: 0.1vw solid #050505;
-      border-top: 0.1vw solid #050505;
+      border-left: 2px solid #050505;
+      border-top: 2px solid #050505;
     }
 
     100% {
-      border-left: 0.1vw solid #050505;
-      border-top: 0.1vw solid #050505;
-      border-right: 0.1vw solid #050505;
+      border-left: 2px solid #050505;
+      border-top: 2px solid #050505;
+      border-right: 2px solid #050505;
     }
   }
 
-  .input-box:focus-within> ::placeholder {
+  .input:focus::placeholder {
     transition: 1s;
     opacity: 0;
   }
@@ -182,6 +216,7 @@
     background-color: transparent;
     padding: .5%;
     padding-left: 1%;
+
     width: 85%;
   }
 
@@ -215,6 +250,87 @@
   .move-down {
     animation: move-down 1s ;
   }
+  .dropdown-container {
+    width: 60%;
+    height: 50%;
+    margin-inline: auto;
+    margin-top:10%;
+    position: relative;
+    overflow: visible;
+  }
+
+  .selected-container {
+    display: flex;
+    width: 100%;
+    margin-inline: auto;
+    flex-wrap:wrap;
+    align-items: center;
+    border: 1px solid gray;
+    padding: 10px;
+
+  }
+
+  .selected-item {
+    background-color: lightgray;
+    padding: 5px 10px;
+    margin: 5px;
+
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+
+  }
+
+  .input-field {
+    border: none;
+    outline: none;
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+
+  }
+
+  .dropdown-list {
+    transition:0.7s;
+    animation: fade 1s;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid gray;
+    border-top: none;
+
+    padding: 10px 0;
+    z-index: 1;
+  }
+
+  .dropdown-list li {
+    list-style: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .dropdown-list li:hover {
+    background-color: lightgray;
+  }
+
+  button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  @keyframes rotation2 {
+    from {
+      bottom:-20vh;
+    }
+    to {
+      bottom:10vh;
+    }
+  }
 
   @keyframes move-down {
     from {
@@ -225,5 +341,12 @@
     }
   }
 
-
+  @keyframes fade {
+    from{
+      opacity:0;
+    }
+    to{
+      opacity: 1;
+    }
+  }
 }
