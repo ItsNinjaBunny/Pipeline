@@ -19,15 +19,20 @@ const DesktopSignIn = () => {
   const [signUp, setSignup] = useState<string>("show-sign-in");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
-  const loginUser = {
-    email,
-    password,
-  };
+
   const [fname, setFname] = useState<string>("");
   const [lname, setLname] = useState<string>("");
   const [emailSignUp, setEmailSignUp] = useState<string>("");
   const [passwordSignUp, setPasswordSignUp] = useState<string>("");
   const [bio, setBio] = useState<string>("");
+
+  const [selectedConsoles, setSelectedConsoles] = useState<string[]>([]);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [phone, setPhone] = useState<string>("");
+
+  const numberTracks = [1, 2, 3];
+  const [currentSignUpPage, setPage] = useState<number>(0);
 
   const consoles = [
     "Atari 2600",
@@ -58,10 +63,7 @@ const DesktopSignIn = () => {
     "Nintendo 3DS",
     "Nintendo Switch Lite",
   ];
-  const [selectedConsoles, setSelectedConsoles] = useState<string[]>([]);
-  const [inputValue, setInputValue] = useState<string>("");
-  const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [phone, setPhone] = useState<string>("");
+
   const signUpUser = {
     name: fname + " " + lname,
     email: emailSignUp,
@@ -69,6 +71,10 @@ const DesktopSignIn = () => {
     phone,
     bio,
     consoles: selectedConsoles,
+  };
+  const loginUser = {
+    email,
+    password,
   };
   const filteredConsoles = consoles.filter(
     (console) =>
@@ -126,8 +132,7 @@ const DesktopSignIn = () => {
 
     setPhone(formattedValue);
   };
-  const numberTracks = [1, 2, 3];
-  const [currentSignUpPage, setPage] = useState<number>(0);
+
   return (
     <div className="body color2 absolute overflow-y-hidden">
       <div className=" color3 absolute  top-0 h-full w-full"></div>
