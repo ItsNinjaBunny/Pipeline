@@ -29,18 +29,6 @@ const DesktopSignIn = () => {
   const [passwordSignUp, setPasswordSignUp] = useState<string>("");
   const [bio, setBio] = useState<string>("");
 
-  const strings = [
-    "Streamline your sales process with our powerful CRM tools.",
-    "Maximize your customer engagement with personalized communication.",
-    "Gain valuable insights into your customer behavior and preferences.",
-    "Easily track and manage your leads, deals, and customer interactions.",
-    "Improve your team's productivity and collaboration with our CRM system.",
-    "Elevate your customer service with our advanced ticketing and support features.",
-    "Empower your marketing efforts with targeted campaigns and automated workflows.",
-    "Unlock the full potential of your customer data with our advanced analytics and reporting.",
-    "Experience the freedom and flexibility of our fully customizable CRM platform.",
-    "Discover the power of seamless integration with our CRM's wide range of integrations.",
-  ];
   const consoles = [
     "Atari 2600",
     "ColecoVision",
@@ -377,8 +365,8 @@ const DesktopSignIn = () => {
           </div>
         </div>
 
-        <div className="content-pane color3 move-down relative z-[2] float-right overflow-hidden">
-          <Typewriter strings={strings} />
+        <div className="content-pane color3 move-down relative z-[2] float-right flex flex-col justify-center overflow-hidden">
+          <Typewriter strings={consoles} />
         </div>
         <div
           className={`${

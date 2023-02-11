@@ -29,7 +29,12 @@ const Typewriter: React.FC<Props> = ({ strings }) => {
     return () => clearInterval(interval);
   }, [index, strings]);
 
-  return <div className="mi-auto relative  text-[#fff]"> {text}</div>;
+  return (
+    <div className="mi-auto relative  text-2xl font-medium tracking-wide text-[#fff]">
+      {" "}
+      {text}
+    </div>
+  );
 };
 
 export default Typewriter;
