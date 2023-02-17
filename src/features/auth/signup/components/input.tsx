@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "src/components/icons";
 
 type Props = {
@@ -27,35 +27,11 @@ export const Input = ({
   const handleShow = () => setShow((prev) => !prev);
 
   const toggleShow = () => (show ? "text" : "password");
-  const phoneNumberFormatter = () => {
-    if (label !== "Phone Number") return;
-
-    if (setPhoneNumber) setPhoneNumber(formatPhoneNumber(value));
-  };
-
-  const formatPhoneNumber = (value: string) => {
-    if (!value) return "";
-
-    const phoneNumber = value.replace(/[^\d]/g, "");
-
-    const phoneNumberLength = phoneNumber.length;
-
-    if (phoneNumberLength < 4) return phoneNumber;
-
-    if (phoneNumberLength < 7) {
-      return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
-    }
-
-    return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
-      3,
-      6
-    )}-${phoneNumber.slice(6, 9)}`;
-  };
 
   return type !== "password" ? (
-    <div className="mx-4 flex flex-col">
-      <div className="mx-1 flex justify-between text-sm font-medium text-slate-800">
-        <label htmlFor={label} className="cursor-text">
+    <div className="mx-4 flex flex-col space-y-2">
+      <div className="mx-1 flex items-center justify-between text-sm font-medium text-slate-800">
+        <label htmlFor={label} className="flex-grow cursor-text">
           {label}
         </label>
         <p
@@ -70,7 +46,6 @@ export const Input = ({
         id={label}
         type={type}
         placeholder={placeholder}
-        onKeyDown={() => phoneNumberFormatter()}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={`rounded border-2 border-slate-500 px-2 py-2 text-sm font-medium tracking-wide

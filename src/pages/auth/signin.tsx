@@ -11,7 +11,7 @@ const SignIn = () => {
   }, []);
 
   return (
-    <div className="flex w-full bg-slate-200">
+    <div className="flex min-h-screen w-full overflow-y-hidden bg-slate-200">
       {isSignIn ? (
         <MobileSignIn isSignIn={isSignIn} setIsSignIn={setIsSignIn} />
       ) : (

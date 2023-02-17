@@ -34,8 +34,6 @@ export const loginWithGoogle = async (
     }
   );
 
-  console.log(data);
-
   const { email, email_verified, family_name, given_name, picture } = data;
 
   const googleResponse = await request<GoogleResponse>(

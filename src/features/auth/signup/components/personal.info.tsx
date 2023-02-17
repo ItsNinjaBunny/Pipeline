@@ -12,6 +12,7 @@ type Props = {
   setPassword: (value: string) => void;
   personalError: string[];
   setPersonalError: (value: string[]) => void;
+  selected: number;
 };
 
 export const PersonalInfo = ({
@@ -26,8 +27,28 @@ export const PersonalInfo = ({
   personalError,
   setPersonalError,
 }: Props) => {
+  const normalizeInput = (value: string, previousValue: string) => {
+    if (!value) return "";
+
+    const currentValue = value.replace(/[^\d]/g, "");
+    const cvLength = currentValue.length;
+
+    if (!previousValue || value.length > previousValue.length) {
+      if (cvLength < 4) return currentValue;
+
+      if (cvLength < 7)
+        return `(${currentValue.slice(0, 3)})${currentValue.slice(3)}`;
+
+      return `(${currentValue.slice(0, 3)})${currentValue.slice(
+        3,
+        6
+      )}-${currentValue.slice(6, 10)}`;
+    }
+    return "";
+  };
+
   return (
-    <div className="py-8 duration-300">
+    <div className={`py-6 duration-500 ease-linear`}>
       <h1 className="relative -top-4 px-4 text-3xl tracking-wide text-slate-900">
         Personal Info
       </h1>
@@ -36,7 +57,7 @@ export const PersonalInfo = ({
         Please provide your name email, phone number and password
       </p>
 
-      <div className="space-y-2">
+      <div className="space-y-4">
         <Input
           label="Name"
           type="text"
@@ -71,7 +92,8 @@ export const PersonalInfo = ({
           placeholder="e.g. +1 234 567 890"
           value={phoneNumber}
           onChange={(e: string) => {
-            setPhoneNumber(e);
+            const newValue = normalizeInput(e, phoneNumber);
+            setPhoneNumber(newValue);
             if (
               regex.phoneNumber.test(e) &&
               e.length >= 10 &&
@@ -84,6 +106,7 @@ export const PersonalInfo = ({
           setPhoneNumber={setPhoneNumber}
           personalError={personalError}
         />
+
         <Input
           label="Password"
           type="password"
