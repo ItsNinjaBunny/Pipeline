@@ -1,4 +1,4 @@
-import { request } from "src/functions";
+import { request } from "src/utils/functions";
 
 export const getRefreshedToken = async (id: string, refreshToken: string) => {
   const response = await request<unknown>(`${process.env.SERVER_URL}`, {
