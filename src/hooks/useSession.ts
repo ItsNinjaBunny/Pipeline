@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { request, Response } from 'src/utils';
+import { request } from 'src/utils/functions';
+import { Response } from 'src/utils/types';
 import { useRouter } from 'next/router';
+import { getToken } from 'src/utils/functions/get.token';
 
 type Session = {
   id: string;
@@ -11,55 +13,27 @@ type Session = {
 
 type SessionError = null;
 
-type RefreshResponse = {
-  accessToken: string;
-  refreshToken: string;
-}
-
-type RefreshError = {
-  message: string;
-  statusCode: number;
-  status: 'error';
-};
-
 export const useSession = () => {
-  const [session, setSession] = useState<Session | null>(null);
+  const [session, setSession] = useState<Session>();
   const router = useRouter();
 
   useEffect(() => {
     const getSession = async() => {
-      const at = localStorage.getItem('accessToken');
-      const rt = localStorage.getItem('refreshToken');
 
-      if (!at || !rt) {
-        //change later if needed
+      const response = await getToken();
+      if(!response) {
         router.push('/auth');
         return;
       }
 
-      const refreshResponse = await request<Response<RefreshResponse, RefreshError>>(`${process.env.NEXT_PUBLIC_API_URL}`, {
-        method: 'post',
-        headers: {
-          "authorization": `Bearer ${rt}`,
-          "Content-Type": "application/json"
-        }
-      });
+      const [accessToken] = response;
 
-      if(refreshResponse.status === 'error') {
-        router.push('/auth');
-        return;
-      }
-
-      const { accessToken, refreshToken } = refreshResponse.data;
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('refreshToken', refreshToken);
-
-      const sessionResponse = await request<Response<Session, SessionError>>(`${process.env.NEXT_PUBLIC_API_URL}/auth/session`, {
+      const sessionResponse = await request<Response<Session, SessionError>>(`${process.env.NEXT_PUBLIC_API_URL}/users/session`, {
         method: 'get',
         headers: {
           "authorization": `Bearer ${accessToken}`,
           "Content-Type": "application/json"
-        }
+        },
       });
 
       if(!sessionResponse) {
