@@ -10,8 +10,8 @@ import EditGames from "src/features/EditGames";
 import EditConsoles from "src/features/EditConsoles";
 import EditAccount from "src/features/EditAccount";
 import EditOffers from "src/features/EditOffers";
+import { useSession } from "src/hooks";
 export const Profile = (props: any) => {
-
   const [signUpUser, setUser] = useState({
     name: "Paco Trenches",
     email: "pacot@netbangers.com",
@@ -60,7 +60,6 @@ export const Profile = (props: any) => {
         publisher: "Capcom",
         year: "2021",
       },
-
     ],
     offers: [], // myReccivedOffers: [],
     // mySentOffers: [],
@@ -106,6 +105,8 @@ export const Profile = (props: any) => {
     setIndex(state);
   }
   const newGame = useState({});
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <>
       <Head>
@@ -146,7 +147,7 @@ export const Profile = (props: any) => {
           <Image priority={true} width={100} height={100} alt="" src={icon} />
           <h1>{signUpUser.username}</h1>
 
-          <div className="ml-auto flex w-40 rounded-md border-2 border-slate-900 justify-end">
+          <div className="ml-auto flex w-40 justify-end rounded-md border-2 border-slate-900">
             {signUpUser.admin == false && (
               <h1
                 className="cursor-pointer   p-[2px] font-[200!important] "

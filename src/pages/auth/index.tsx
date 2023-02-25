@@ -159,7 +159,7 @@ const DesktopSignIn = () => {
   };
 
   function postUser(signUpUser: any) {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+    fetch("http://localhost:8080/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -180,7 +180,7 @@ const DesktopSignIn = () => {
       .catch((error) => window.alert(error));
   }
   function signInUser() {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+    fetch("http://localhost:8080/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
