@@ -1,4 +1,4 @@
-import { request } from "src/functions";
+import { request } from "src/utils/functions";
 
 type FacebookResponse = {
   error: string | null;

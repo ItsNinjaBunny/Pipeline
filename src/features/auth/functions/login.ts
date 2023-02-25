@@ -1,4 +1,4 @@
-import { request } from "src/functions";
+import { request } from "src/utils/functions";
 import { LoginCredentials } from "../types";
 
 export const login = async (credentials: {
