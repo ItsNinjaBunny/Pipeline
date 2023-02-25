@@ -14,11 +14,7 @@ export const Navigation = () => {
         links={NavigationLinks}
         className={`hidden lg:flex`}
       />
-      <MobileNavigation
-        selected={selected}
-        className={`lg:hidden`}
-        links={NavigationLinks}
-      />
+
     </>
   );
 };

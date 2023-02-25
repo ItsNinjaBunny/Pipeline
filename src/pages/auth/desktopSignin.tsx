@@ -9,6 +9,8 @@ import {
   ArrowUpIcon,
   ChevronDownIcon,
   ChevronUpIcon,
+  TrashIcon,
+  ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 
 import Image from "next/image";
@@ -26,6 +28,7 @@ const DesktopSignIn = () => {
   const [passwordSignUp, setPasswordSignUp] = useState<string>("");
   const [bio, setBio] = useState<string>("");
 
+  const [Username, setUsername] = useState("");
   const [selectedConsoles, setSelectedConsoles] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
@@ -36,41 +39,63 @@ const DesktopSignIn = () => {
 
   const consoles = [
     "Atari 2600",
+    "Atari 5200",
+    "Atari 7800",
+    "Atari Jaguar",
+    "Atari Lynx",
     "ColecoVision",
-    "Nintendo Entertainment System (NES)",
-    "Sega Master System",
-    "TurboGrafx-16 (PC Engine)",
-    "Sega Genesis (Mega Drive)",
-    "Super Nintendo Entertainment System (SNES)",
-    "Sega Saturn",
-    "PlayStation",
-    "Nintendo 64",
-    "Sega Dreamcast",
-    "PlayStation 2(PS2)",
-    "Xbox",
+    "Commodore 64",
+    "Game Boy",
+    "Game Boy Advance",
+    "Game Boy Color",
     "GameCube",
-    "Xbox 360",
-    "PlayStation 3(PS3)",
-    "Wii",
-    "Xbox One",
-    "PlayStation 4(PS4)",
-    "Wii U",
-    "Nintendo Switch",
-    "Xbox Series X/S",
-    "PlayStation 5 (PS5)",
-    "PlayStation Portable (PSP)",
-    "Nintendo DS",
+    "Intellivision",
+    "Magnavox Odyssey",
+    "Microsoft Xbox",
+    "Microsoft Xbox 360",
+    "Microsoft Xbox One",
+    "Neo Geo AES",
+    "Neo Geo CD",
+    "Neo Geo MVS",
     "Nintendo 3DS",
-    "Nintendo Switch Lite",
+    "Nintendo 64",
+    "Nintendo DS",
+    "Nintendo Entertainment System",
+    "Nintendo GameCube",
+    "Nintendo Switch",
+    "Nintendo Wii",
+    "Nintendo Wii U",
+    "PC",
+    "PlayStation",
+    "PlayStation 2",
+    "PlayStation 3",
+    "PlayStation 4",
+    "PlayStation 5",
+    "PlayStation Portable",
+    "PlayStation Vita",
+    "Sega Dreamcast",
+    "Sega Game Gear",
+    "Sega Genesis",
+    "Sega Master System",
+    "Sega Saturn",
+    "Super Nintendo Entertainment System",
+    "TurboGrafx-16",
+    "Xbox 360",
   ];
 
   const signUpUser = {
-    name: fname + " " + lname,
+    firstName: fname,
+    lastName: lname,
     email: emailSignUp,
     password: passwordSignUp,
-    phone,
+    username: Username,
+    phoneNumber: phone
+      .replaceAll("(", "")
+      .replaceAll(")", "")
+      .replaceAll("-", "")
+      .replaceAll(" ", ""),
     bio,
-    consoles: selectedConsoles,
+    platforms: selectedConsoles,
   };
   const loginUser = {
     email,
@@ -133,6 +158,49 @@ const DesktopSignIn = () => {
     setPhone(formattedValue);
   };
 
+  function postUser(signUpUser: any) {
+    fetch("http://localhost:8080/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: signUpUser }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.statusCode === 201) {
+          setSignup("show-sign-in");
+          setPage(0);
+          window.alert("Account Created Successfully");
+        } else {
+          window.alert("Account Email/Username is Already in Use");
+        }
+      })
+      .catch((error) => window.alert(error));
+  }
+  function signInUser() {
+    fetch("http://localhost:8080/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.statusCode === 200) {
+          console.log(data.body);
+          localStorage.setItem("ACCESS_TOKEN", data.data.accessToken);
+          localStorage.setItem("REFRESH_TOKEN", data.data.refreshToken);
+          window.location.href = "http://localhost:3000/Profile";
+        } else {
+          window.alert("Account Email/Username is Already in Use");
+        }
+      })
+      .catch((error) => window.alert(error));
+  }
   return (
     <div className="body color2 absolute overflow-y-hidden">
       <div className=" color3 absolute  top-0 h-full w-full"></div>
@@ -170,7 +238,7 @@ const DesktopSignIn = () => {
               <input
                 className="input float-left"
                 type="text"
-                placeholder="Username"
+                placeholder="Username or Email"
                 onChange={(e) => setEmail(e.target.value)}
               ></input>
             </div>
@@ -185,7 +253,10 @@ const DesktopSignIn = () => {
             </div>
             <button
               type="submit"
-              className="login-button mi-auto rounded-md text-xl "
+              className="login-button mi-auto rounded-md text-xl"
+              onClick={() => {
+                signInUser();
+              }}
             >
               Login
             </button>
@@ -235,7 +306,7 @@ const DesktopSignIn = () => {
               onSubmit={async (e) => {
                 e.preventDefault();
               }}
-              className=" mt-[10%] flex  w-[100%] flex-col content-center "
+              className=" mt-[5%] flex  w-[100%] flex-col content-center "
             >
               {/* <input name='csrfToken' type='hidden' defaultValue={csrfToken} /> */}
 
@@ -262,6 +333,15 @@ const DesktopSignIn = () => {
                   type="text"
                   placeholder="JaneDoe1987@gmail.com"
                   onChange={(e) => setEmailSignUp(e.target.value)}
+                ></input>
+              </div>
+              <div className="input-box mi-auto t">
+                <ShieldCheckIcon className="float-left h-8 w-8" />
+                <input
+                  className="input float-left"
+                  type="text"
+                  placeholder="XxGamerxX"
+                  onChange={(e) => setUsername(e.target.value)}
                 ></input>
               </div>
               <div className="input-box mi-auto t">
@@ -333,7 +413,7 @@ const DesktopSignIn = () => {
               My Consoles
             </h1>
 
-            <div className="dropdown-container mt-[15%]">
+            <div className="dropdown-container mt-[8%] w-[80%]">
               <div className="selected-container rounded-t-md border-b-0">
                 <input
                   value={inputValue}
@@ -342,9 +422,13 @@ const DesktopSignIn = () => {
                   className="input-field"
                 />
                 {showDropdown && (
-                  <ul className="dropdown-list rounded-b-md">
+                  <ul className="dropdown-list rounded-b-md ">
                     {filteredConsoles.map((console) => (
-                      <li key={console} onClick={() => handleSelect(console)}>
+                      <li
+                        key={console}
+                        className=""
+                        onClick={() => handleSelect(console)}
+                      >
                         {console}
                       </li>
                     ))}
@@ -353,17 +437,28 @@ const DesktopSignIn = () => {
               </div>
               <div className="selected-container rounded-b-md border-t-0">
                 {selectedConsoles.map((console) => (
-                  <div key={console} className="selected-item">
+                  <div key={console} className="selected-item text-sm">
                     {console}
-                    <button onClick={() => handleRemove(console)}>x</button>
+                    <TrashIcon
+                      onClick={() => handleRemove(console)}
+                      className="h-5 w-5 cursor-pointer"
+                    />
                   </div>
                 ))}
               </div>
             </div>
             <button
               type="button"
-              className="login-button mi-auto rounded-md text-xl "
-              onClick={() => console.log(signUpUser)}
+              className="login-button mi-auto mb-auto rounded-md text-xl "
+              onClick={() => {
+                console.log(signUpUser);
+                const temp: string[] = [];
+                selectedConsoles.forEach((value: string) =>
+                  temp.push(value.replaceAll(" ", "_"))
+                );
+                signUpUser.platforms = temp;
+                postUser(signUpUser);
+              }}
             >
               Sign Up
             </button>
@@ -379,8 +474,8 @@ const DesktopSignIn = () => {
           } color4 absolute top-0 right-0 z-[3] flex h-full flex-col content-center self-center overflow-hidden align-middle `}
         >
           <div
-            className="mi-auto align-center relative top-[5%]
-            z-10  w-[10%] content-center justify-center overflow-hidden"
+            className="mi-auto align-center relative
+            z-10 mb-auto w-[10%] content-center justify-center overflow-hidden"
           >
             <ChevronUpIcon
               className="smooth fade cursor-pointer"
@@ -392,7 +487,7 @@ const DesktopSignIn = () => {
             />
           </div>
 
-          <div className="relative top-[30%] flex  flex-row content-center space-x-2 self-center align-middle">
+          <div className="relative  flex  flex-row content-center space-x-2 self-center align-middle">
             {numberTracks.map((number) => (
               <>
                 {number !== undefined && (
@@ -411,14 +506,14 @@ const DesktopSignIn = () => {
                     <div
                       className={`${
                         currentSignUpPage <= number ? "opacity-50" : ""
-                      } smooth mt-[2.5vh] h-[.1vh] w-[6vw] bg-slate-900 `}
+                      } smooth mt-[2vh] h-[.1vh] w-[6vw] bg-slate-900 `}
                     ></div>
                   )}
               </>
             ))}
           </div>
 
-          <p className="relative top-[40%] mt-[3%] flex justify-center self-center align-middle font-medium tracking-wide">
+          <p className="relative  mt-[3%] flex justify-center self-center align-middle font-medium tracking-wide">
             Have an account?
             <span
               onClick={() => {
@@ -433,7 +528,7 @@ const DesktopSignIn = () => {
           </p>
           <div
             className="mi-auto align-center fade
-            relative top-[55%]  z-10 w-[10%] content-center justify-center overflow-hidden"
+            relative z-10  mt-auto w-[10%] content-center justify-center overflow-hidden"
           >
             <ChevronDownIcon
               className="smooth skewed cursor-pointer"

@@ -1,3 +1,4 @@
+import { SignOutIcon } from 'src/components/icons/SignOutIcon';
 import {
   HouseIcon,
   CalendarIcon,
@@ -8,35 +9,41 @@ import {
 } from "../../icons";
 
 const LinkStyles = "w-7 h-7 md:w-8 md:h-8";
+
+
 export const NavigationLinks = [
   {
-    name: "Home",
-    href: "/",
-    icon: HouseIcon({ className: LinkStyles }),
-  },
-  {
-    name: "Calendar",
-    href: "/calendar",
+    name: "Reports",
+    href: "/reports",
     icon: CalendarIcon({ className: LinkStyles }),
   },
   {
-    name: "Clients",
-    href: "/clients",
+    name: "Games",
+    href: "/allGames",
+    icon: CalendarIcon({ className: LinkStyles }),
+  },
+  {
+    name: "Outgoing Trades",
+    href: "/otrades",
     icon: UsersIcon({ className: LinkStyles }),
   },
   {
-    name: "Analytics",
-    href: "/analytics",
+    name: "Received Trades",
+    href: "/rtrades",
     icon: ChartBarIcon({ className: LinkStyles }),
   },
   {
-    name: "Automation",
-    href: "/automation",
-    icon: ComputerIcon({ className: LinkStyles }),
-  },
-  {
     name: "Profile",
-    href: "/profile",
+    href: "/Profile",
     icon: UserCircleIcon({ className: LinkStyles }),
   },
+  {
+    name: "Sign Out",
+    href: "/auth/desktopSignin",
+    icon: SignOutIcon({ className: LinkStyles })
+
+  }
 ];
+
+
+

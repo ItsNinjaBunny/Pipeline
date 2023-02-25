@@ -1,6 +1,7 @@
 import { type AppType } from "next/app";
 
 import "../styles/globals.css";
+import "../styles/profilestyles.css";
 import React from "react";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 

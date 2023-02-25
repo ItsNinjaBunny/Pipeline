@@ -6,7 +6,7 @@ const Dashboard: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Dashboard</title>
+        <title>My Profile</title>
         <meta
           name="description"
           content="nSight Customer Relations done easy"
