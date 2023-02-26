@@ -18,7 +18,7 @@ export const useSession = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const getSession = async() => {
+    const getSession = async () => {
 
       const response = await getToken();
       if(!response) {
@@ -28,7 +28,7 @@ export const useSession = () => {
 
       const [accessToken] = response;
 
-      const sessionResponse = await request<Response<Session, SessionError>>(`${process.env.NEXT_PUBLIC_API_URL}/users/session`, {
+      const sessionResponse = await request<Response<Session, SessionError>>(`/users/session`, {
         method: 'get',
         headers: {
           "authorization": `Bearer ${accessToken}`,

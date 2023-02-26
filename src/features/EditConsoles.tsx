@@ -1,9 +1,10 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
+import { getToken, request } from "src/utils";
 
 const EditConsoles = (props: any) => {
   const [selectedConsoles, setSelectedConsoles] = useState<string[]>(
-    props.user.consoles
+    props.user.platforms
   );
   const [inputValue, setInputValue] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
@@ -78,8 +79,8 @@ const EditConsoles = (props: any) => {
   };
 
   return (
-    <div className="mt-10 flex h-full w-full scale-90 flex-col  ">
-      <div className="dropdown-container mt-0">
+    <div className=" flex h-[70vh] w-full scale-90 flex-col  ">
+      <div className="dropdown-container relative top-[-18vh]">
         <div className="selected-container rounded-t-md border-b-0">
           <input
             value={inputValue}
@@ -88,7 +89,7 @@ const EditConsoles = (props: any) => {
             className="input-field text-2xl"
           />
           {showDropdown && (
-            <ul className="dropdown-list top-[22%] rounded-b-md ">
+            <ul className="dropdown-list top-[9vh] mb-10 h-auto rounded-b-md ">
               {filteredConsoles.map((console: any) => (
                 <li key={console} onClick={() => handleSelect(console)}>
                   {console}
@@ -113,13 +114,26 @@ const EditConsoles = (props: any) => {
       <button
         type="button"
         className="login-button mi-auto top-[0] h-auto rounded-md text-xl"
-        onClick={() => {
+        onClick={async () => {
           const temp: string[] = [];
           selectedConsoles.forEach((value: string) =>
             temp.push(value.replaceAll(" ", "_"))
           );
-          props.user.consoles = temp;
+          props.user.platforms = selectedConsoles;
           props.setUser(props.user);
+          getToken();
+          await request("/users", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: {
+              platforms: temp,
+            },
+          });
+          props.setPopUp(false);
+          window.alert("Platforms have been updated");
         }}
       >
         Save

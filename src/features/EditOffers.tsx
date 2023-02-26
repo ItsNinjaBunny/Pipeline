@@ -2,6 +2,8 @@ import { TrashIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { boolean } from "zod";
 import GameCard from "./GameCard";
+import { getToken, request } from "src/utils";
+import { useSession } from "src/hooks";
 
 const EditOffers = (props: any) => {
   const [state, setState] = useState<string>("add");
@@ -93,7 +95,8 @@ const EditOffers = (props: any) => {
                 <ul className="dropdown-list top-[14%] rounded-b-md ">
                   {filteredConsoles.map((console: any) => (
                     <li key={console} onClick={() => handleSelect(console)}>
-                      {console.name} - {console.platform} - {console.year}
+                      {console.name} - {console.platform.replaceAll("_", " ")} -{" "}
+                      {console.year}
                     </li>
                   ))}
                 </ul>
@@ -114,14 +117,32 @@ const EditOffers = (props: any) => {
           <button
             type="button"
             className="login-button mi-auto mt-auto h-auto rounded-md  "
-            onClick={() => {
-              props.user.offers.push({
-                id: Math.random().toString(36).substr(2, 9),
-                userId: props.user.id,
-                games: selectedConsoles.map((obj: { id: any }) => obj.id),
+            onClick={async () => {
+              await getToken();
+
+              const newOffer: any = await request("/offers", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+                body: {
+                  offer: {
+                    games: selectedConsoles.map((obj: { id: any }) => obj.id),
+                  },
+                },
               });
+              props.user.offers.push(newOffer.data.offer);
+              newOffer.data.offer.games.map(
+                (game: any) =>
+                  (props.user.games = props.user.games.filter(
+                    (c: any) => c.id !== game.id
+                  ))
+              );
               props.setUser(props.user);
-              console.log(props.user);
+
               setSelectedConsoles([]);
               setInputValue("");
             }}
@@ -134,6 +155,7 @@ const EditOffers = (props: any) => {
         <div className="relative  flex h-[60vh] w-full flex-col overflow-scroll   align-middle">
           <div className=" w-[80%]">
             {props.user.offers.map((offer: any) => {
+              console.log(offer);
               return (
                 <div
                   className="mt-10   rounded-[50px] bg-slate-300 p-[1%] "
@@ -142,8 +164,30 @@ const EditOffers = (props: any) => {
                   <h1 className="mt-3 mb-5 flex h-[7vh] flex-row items-center justify-center overflow-hidden text-4xl font-semibold tracking-wide">
                     Offer - {offer.id}
                     <TrashIcon
-                      onClick={() => {
+                      onClick={async () => {
                         deleteOffer(offer.id);
+                        await getToken();
+
+                        await request("/offers/" + offer.id, {
+                          method: "DELETE",
+                          headers: {
+                            "Content-Type": "application/json",
+                            authorization: `Bearer ${localStorage.getItem(
+                              "accessToken"
+                            )}`,
+                          },
+                        });
+                        props.user.offers = props.user.offers.filter(
+                          (c: any) => c.id !== offer.id
+                        );
+                        offer.games.map(
+                          (game: any) =>
+                            (
+                              props.user.games.push(game)
+                            )
+                        );
+
+                        props.setUser(props.user);
                       }}
                       className="ml-10 h-10 w-10 cursor-pointer text-black"
                     />

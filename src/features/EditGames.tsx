@@ -2,6 +2,7 @@ import { UserCircleIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import { boolean } from "zod";
 import GameCard from "./GameCard";
+import { getToken, request } from "src/utils";
 
 const EditGames = (props: any) => {
   const [state, setState] = useState<string>("add");
@@ -19,32 +20,48 @@ const EditGames = (props: any) => {
 
   const consoles = [
     "Atari 2600",
+    "Atari 5200",
+    "Atari 7800",
+    "Atari Jaguar",
+    "Atari Lynx",
     "ColecoVision",
-    "Nintendo Entertainment System (NES)",
-    "Sega Master System",
-    "TurboGrafx-16 (PC Engine)",
-    "Sega Genesis (Mega Drive)",
-    "Super Nintendo Entertainment System (SNES)",
-    "Sega Saturn",
-    "PlayStation",
-    "Nintendo 64",
-    "Sega Dreamcast",
-    "PlayStation 2(PS2)",
-    "Xbox",
+    "Commodore 64",
+    "Game Boy",
+    "Game Boy Advance",
+    "Game Boy Color",
     "GameCube",
-    "Xbox 360",
-    "PlayStation 3(PS3)",
-    "Wii",
-    "Xbox One",
-    "PlayStation 4(PS4)",
-    "Wii U",
-    "Nintendo Switch",
-    "Xbox Series X/S",
-    "PlayStation 5 (PS5)",
-    "PlayStation Portable (PSP)",
-    "Nintendo DS",
+    "Intellivision",
+    "Magnavox Odyssey",
+    "Microsoft Xbox",
+    "Microsoft Xbox 360",
+    "Microsoft Xbox One",
+    "Neo Geo AES",
+    "Neo Geo CD",
+    "Neo Geo MVS",
     "Nintendo 3DS",
-    "Nintendo Switch Lite",
+    "Nintendo 64",
+    "Nintendo DS",
+    "Nintendo Entertainment System",
+    "Nintendo GameCube",
+    "Nintendo Switch",
+    "Nintendo Wii",
+    "Nintendo Wii U",
+    "PC",
+    "PlayStation",
+    "PlayStation 2",
+    "PlayStation 3",
+    "PlayStation 4",
+    "PlayStation 5",
+    "PlayStation Portable",
+    "PlayStation Vita",
+    "Sega Dreamcast",
+    "Sega Game Gear",
+    "Sega Genesis",
+    "Sega Master System",
+    "Sega Saturn",
+    "Super Nintendo Entertainment System",
+    "TurboGrafx-16",
+    "Xbox 360",
   ];
 
   const filteredConsoles = consoles.filter((console) =>
@@ -161,18 +178,18 @@ const EditGames = (props: any) => {
               className="mr-[0.5%] h-[20px] w-[20px] "
               name="group1"
               type="radio"
-              checked={condition === "New"}
+              checked={condition === "new"}
               onChange={() => {
-                setCondition("New");
+                setCondition("new");
               }}
             ></input>
             <p className="text-xl"> New</p>
             <input
               className=" ml-[2%]  mr-[1%] h-[20px] w-[20px]"
               name="group1"
-              checked={condition === "Used"}
+              checked={condition === "used"}
               onChange={() => {
-                setCondition("Used");
+                setCondition("used");
               }}
               type="radio"
             ></input>
@@ -181,14 +198,34 @@ const EditGames = (props: any) => {
           <input className="mt-3" type="file"></input>
           <button
             className="login-button mi-auto   h-[5vh]  overflow-hidden rounded-md"
-            onClick={(e) => {
+            onClick={async (e) => {
               e.preventDefault();
+              await getToken();
+
               props.addGame({
                 name,
-                platform,
+                platform: platform.replaceAll(" ", "_"),
                 publisher,
                 condition,
                 year,
+              });
+              request("/games", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+                body: {
+                  game: {
+                    name,
+                    platform: platform.replaceAll(" ", "_"),
+                    publisher,
+                    condition,
+                    year,
+                  },
+                },
               });
               resetInputs();
             }}

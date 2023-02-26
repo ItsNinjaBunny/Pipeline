@@ -12,15 +12,15 @@ type RefreshError = {
   status: 'error';
 };
 
-export const getToken = async() => {
+export const getToken = async () => {
   const at = localStorage.getItem('accessToken');
   const rt = localStorage.getItem('refreshToken');
 
-  if (!at || !rt) {
+  if(!at || !rt) {
     return null;
   }
 
-  const refreshResponse = await request<Response<RefreshResponse, RefreshError>>(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh`, {
+  const refreshResponse = await request<Response<RefreshResponse, RefreshError>>('/auth/refresh', {
     method: 'post',
     headers: {
       "authorization": `Bearer ${rt}`,
@@ -29,7 +29,7 @@ export const getToken = async() => {
   });
 
 
-  if (refreshResponse.status === 'error') {
+  if(refreshResponse.status === 'error') {
     return null;
   }
 
