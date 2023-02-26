@@ -1,172 +1,66 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navigation } from "src/components";
 import TradeCard from "src/features/TradeCard";
+import { getToken, request } from "src/utils";
 
 const rtrades = () => {
-  const offers = [
-    {
-      offerId: 1,
-      games: [
-        {
-          id: "1a",
-          condition: "Used",
-          name: "Call Of Duty: Black Ops 3",
-          platform: "PlayStation 3(PS3)",
-          publisher: "Activision",
-          year: "2010",
-        },
-        {
-          id: "2a",
-          condition: "New",
-          name: "Assassin's Creed 3",
-          platform: "Xbox Series X",
-          publisher: "Ubisoft",
-          year: "2020",
-        },
-      ],
-      trades: [
-        {
-          id: "Asdas3",
-          user: { username: "Alice", userId: "1" },
-          games: [
-            {
-              id: "1a",
-              condition: "Used",
-              name: "Call Of Duty: Black Ops 1",
-              platform: "PlayStation 3(PS3)",
-              publisher: "Activision",
-              year: "2010",
-            },
-            {
-              id: "2a",
-              condition: "New",
-              name: "Assassin's Creed Valhalla",
-              platform: "Xbox Series X",
-              publisher: "Ubisoft",
-              year: "2020",
-            },
-          ],
-        },
-        {
-          id: "123",
-          user: { username: "Alice", userId: "1" },
-          games: [
-            {
-              id: "1a",
-              condition: "Used",
-              name: "Call Of Duty: Black Ops 1",
-              platform: "PlayStation 3(PS3)",
-              publisher: "Activision",
-              year: "2010",
-            },
-            {
-              id: "2a",
-              condition: "New",
-              name: "God Of War",
-              platform: "Xbox Series X",
-              publisher: "Ubisoft",
-              year: "2020",
-            },
-          ],
-        },
-      ],
-    },
-    {
-      offerId: 2,
-      games: [
-        {
-          id: "1a",
-          condition: "Used",
-          name: "Call Of Duty: Black Ops 3",
-          platform: "PlayStation 3(PS3)",
-          publisher: "Activision",
-          year: "2010",
-        },
-        {
-          id: "2a",
-          condition: "New",
-          name: "Assassin's Creed 3",
-          platform: "Xbox Series X",
-          publisher: "Ubisoft",
-          year: "2020",
-        },
-      ],
-      trades: [
-        {
-          id: "fcsewtr43",
-          user: { username: "Alice", userId: "1" },
-          games: [
-            {
-              id: "1a",
-              condition: "Used",
-              name: "Call Of Duty: Black Ops 4",
-              platform: "PlayStation 3(PS3)",
-              publisher: "Activision",
-              year: "2010",
-            },
-            {
-              id: "2a",
-              condition: "New",
-              name: "Assassin's Creed Valhalla",
-              platform: "Xbox Series X",
-              publisher: "Ubisoft",
-              year: "2020",
-            },
-          ],
-        },
-        {
-          id: "1asdas",
-          user: { username: "Alice", userId: "1" },
-          games: [
-            {
-              id: "1a",
-              condition: "Used",
-              name: "Call Of Duty: Black Ops 2",
-              platform: "PlayStation 3(PS3)",
-              publisher: "Activision",
-              year: "2010",
-            },
-            {
-              id: "2a",
-              condition: "New",
-              name: "Assassin's Creed Valhalla",
-              platform: "Xbox Series X",
-              publisher: "Ubisoft",
-              year: "2020",
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const [offers, setOffers] = useState<any>();
   function deleteTrade(game: any) {
     document.getElementById(game)?.remove();
     //send del request for this game here
   }
+  const getOffers = async () => {
+    await getToken();
+
+    const response: any = await request("/offers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    console.log(response.data);
+
+    setOffers(response.data);
+  };
+  const [id, setid] = useState("");
+  if (offers === undefined) {
+    getOffers();
+  }
   return (
-    <div className="bg-white ">
-      <Navigation></Navigation>
-      <div className="content h-full overflow-hidden bg-white">
-        <h1 className="fixed top-7 w-[70%] border-b-2 border-slate-300 pb-3  text-center text-2xl">
-          Outgoing Trades
-        </h1>
-        <div className="relative top-[15%] h-full w-full bg-white">
-          {offers.map((offer) => (
-            <div key={offer.offerId}>
-              {offer.trades.map((trade) => (
-                <TradeCard
-                  deleteTrade={deleteTrade}
-                  offer={offer.games}
-                  out={false}
-                  tradeId={trade.id}
-                  trade={trade.games}
-                ></TradeCard>
-              ))}
+    <>
+      {offers !== undefined && (
+        <div className="bg-white ">
+          <Navigation></Navigation>
+          <div className="content h-full overflow-hidden bg-white">
+            <h1 className="fixed top-7 w-[70%] border-b-2 border-slate-300 pb-3  text-center text-2xl">
+              Reccieved Trades
+            </h1>
+            <div className="relative top-[15%] h-[90%] w-full bg-white">
+              {offers.map(
+                (offer: {
+                  offerId: React.Key | null | undefined;
+                  trades: any[];
+                  games: any;
+                }) => (
+                  <div key={offer.offerId}>
+                    {offer.trades.map((trade: { id: any; games: any }) => (
+                      <TradeCard
+                        deleteTrade={deleteTrade}
+                        offer={offer.games}
+                        out={false}
+                        tradeId={trade.id}
+                        trade={trade.games}
+                      ></TradeCard>
+                    ))}
+                  </div>
+                )
+              )}
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

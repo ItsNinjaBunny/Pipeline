@@ -127,7 +127,7 @@ const EditGames = (props: any) => {
         >
           <div className="input-box smooth mi-auto mb-auto h-[5vh] items-center overflow-visible p-0">
             <input
-              className="input float-left mt-0 mb-[4px] "
+              className="input float-left mt-0 mb-[1px] "
               type="text"
               placeholder="Name"
               value={name}
@@ -136,7 +136,7 @@ const EditGames = (props: any) => {
           </div>
           <div className="input-box smooth mi-auto mb-auto h-[5vh] items-center overflow-visible p-0">
             <input
-              className="input float-left mt-0 mb-[4px] "
+              className="input float-left mt-0 mb-[1px] "
               type="text"
               placeholder="Platform"
               value={platform}
@@ -157,7 +157,7 @@ const EditGames = (props: any) => {
           </div>
           <div className="input-box smooth mi-auto mb-auto h-[5vh] items-center overflow-visible p-0">
             <input
-              className="input float-left mt-0 mb-[4px] "
+              className="input float-left mt-0 mb-[1px] "
               type="text"
               placeholder="Publisher"
               value={publisher}
@@ -166,7 +166,7 @@ const EditGames = (props: any) => {
           </div>
           <div className="input-box smooth mi-auto mb-auto h-[5vh] items-center overflow-visible p-0">
             <input
-              className="input float-left mt-0 mb-[4px] "
+              className="input float-left mt-0 mb-[1px] "
               type="number"
               placeholder="Year"
               value={year}

@@ -1,50 +1,14 @@
 import React, { useState } from "react";
 import GameCard from "./GameCard";
+import { getToken, request } from "src/utils";
 
 const SendTrade = (props: any) => {
   const [selectedConsoles, setSelectedConsoles] = useState<any>([]);
-  function deleteOffer(id: any) {
-    document.getElementById("offer-" + id)?.remove();
-    //send del request for this offer here
-  }
 
   const [inputValue, setInputValue] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
-  const consoles = [
-    {
-      id: 11,
-      condition: "Used",
-      name: "Halo 5: Guardians",
-      platform: "Xbox One",
-      publisher: "Microsoft Studios",
-      year: "2015",
-    },
-    {
-      id: 12,
-      condition: "New",
-      name: "The Elder Scrolls V: Skyrim Special Edition",
-      platform: "PlayStation 4(PS4)",
-      publisher: "Bethesda Softworks",
-      year: "2016",
-    },
-    {
-      id: 13,
-      condition: "Used",
-      name: "Uncharted 4: A Thief's End",
-      platform: "PlayStation 4(PS4)",
-      publisher: "Naughty Dog",
-      year: "2016",
-    },
-    {
-      id: 14,
-      condition: "New",
-      name: "Resident Evil Village",
-      platform: "PlayStation 5(PS5)",
-      publisher: "Capcom",
-      year: "2021",
-    },
-  ];
+  const consoles = props.session.games;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -91,7 +55,8 @@ const SendTrade = (props: any) => {
                   key={console}
                   onClick={() => handleSelect(console)}
                 >
-                  {console.name} - {console.platform} - {console.year}
+                  {console.name} - {console.platform.replaceAll("_", " ")} -{" "}
+                  {console.year}
                 </li>
               ))}
             </ul>
@@ -112,12 +77,20 @@ const SendTrade = (props: any) => {
       <button
         type="button"
         className="login-button mi-auto mt-auto h-auto rounded-md  "
-        onClick={() => {
-          console.log({
-            games: selectedConsoles.map((obj: { id: any }) => obj.id),
-
+        onClick={async () => {
+          await getToken();
+          await request("/trades/" + props.offerId, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+            body: {
+              games: selectedConsoles.map((obj: { id: any }) => obj.id),
+            },
           });
           props.setPopUp(false);
+          window.alert("Trade Sent");
         }}
       >
         Send Offer

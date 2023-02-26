@@ -14,96 +14,6 @@ import { getToken, request } from "src/utils";
 
 const Game = (props: any) => {
   const [offers, setOffers] = useState<any>();
-  // const offers = [
-  //   {
-  //     id: "123",
-  //     user: { username: "Alice", userId: "1" },
-  //     games: [
-  //       {
-  //         id: "1a",
-  //         condition: "Used",
-  //         name: "Call Of Duty: Black Ops 1",
-  //         platform: "PlayStation 3(PS3)",
-  //         publisher: "Activision",
-  //         year: "2010",
-  //       },
-  //       {
-  //         id: "2a",
-  //         condition: "New",
-  //         name: "Assassin's Creed Valhalla",
-  //         platform: "Xbox Series X",
-  //         publisher: "Ubisoft",
-  //         year: "2020",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "123",
-  //     user: { username: "Alice", userId: "1" },
-  //     games: [
-  //       {
-  //         id: "1a",
-  //         condition: "Used",
-  //         name: "Call Of Duty: Black Ops 1",
-  //         platform: "PlayStation 3(PS3)",
-  //         publisher: "Activision",
-  //         year: "2010",
-  //       },
-  //       {
-  //         id: "2a",
-  //         condition: "New",
-  //         name: "Assassin's Creed Valhalla",
-  //         platform: "Xbox Series X",
-  //         publisher: "Ubisoft",
-  //         year: "2020",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "123",
-  //     user: { username: "Bob", userId: "2" },
-  //     games: [
-  //       {
-  //         id: "1b",
-  //         condition: "Used",
-  //         name: "Call Of Duty: Modern Warfare 2",
-  //         platform: "Xbox 360",
-  //         publisher: "Activision",
-  //         year: "2009",
-  //       },
-  //       {
-  //         id: "2b",
-  //         condition: "New",
-  //         name: "The Legend of Zelda: Breath of the Wild",
-  //         platform: "Nintendo Switch",
-  //         publisher: "Nintendo",
-  //         year: "2017",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     id: "123",
-  //     user: { username: "Charlie", userId: "3" },
-  //     games: [
-  //       {
-  //         id: "1c",
-  //         condition: "Used",
-  //         name: "Grand Theft Auto V",
-  //         platform: "PlayStation 4",
-  //         publisher: "Rockstar Games",
-  //         year: "2014",
-  //       },
-  //       {
-  //         id: "2c",
-  //         condition: "New",
-  //         name: "Halo Infinite",
-  //         platform: "Xbox Series X",
-  //         publisher: "Microsoft Studios",
-  //         year: "2021",
-  //       },
-  //     ],
-  //   },
-  // ];
 
   const [popUp, setPopUp] = useState(false);
   const [title, setTitle] = useState<string>("");
@@ -131,18 +41,16 @@ const Game = (props: any) => {
   const getOffers = async () => {
     await getToken();
 
-    const response: any = await request("/offers", {
+    const response: any = await request("/offers/all", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
-    console.log(response.data);
-    response.data = await response.data.filter(
-      (c: any) => c.userId !== session?.id
-    ).
-    setOffers(response.data);
+    console.log(response);
+
+    setOffers(response);
   };
   const [id, setid] = useState("");
   if (offers === undefined) {
@@ -347,7 +255,11 @@ const Game = (props: any) => {
                 setPopUp(false);
               }}
               children={[
-                <SendTrade setPopUp={setPopUp} offerId={id}></SendTrade>,
+                <SendTrade
+                  setPopUp={setPopUp}
+                  session={session}
+                  offerId={id}
+                ></SendTrade>,
               ]}
             ></Popup>
           </div>
