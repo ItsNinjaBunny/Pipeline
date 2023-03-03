@@ -15,7 +15,7 @@ export const ViewProfile = (props: any) => {
   const { user } = router.query;
   const getUser = () => {
     if (user) {
-      return user + "";
+      return JSON.parse(user + "");
     }
     return "";
   };
