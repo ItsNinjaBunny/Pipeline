@@ -13,8 +13,13 @@ import { useSession } from "src/hooks";
 export const ViewProfile = (props: any) => {
   const router = useRouter();
   const { user } = router.query;
-
-  const [signUpUser, setUser] = useState<any>(JSON.parse(user + ""));
+  const getUser = () => {
+    if (user) {
+      return user + "";
+    }
+    return "";
+  };
+  const [signUpUser, setUser] = useState<any>(getUser());
   const [rawUser, setRawUser] = useState<any>();
   const { data: session } = useSession();
   if (rawUser === undefined && session !== undefined) {
