@@ -165,6 +165,7 @@ const DesktopSignIn = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({ user: signUpUser }),
       }
@@ -189,6 +190,7 @@ const DesktopSignIn = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({ username: email, password }),
       }
