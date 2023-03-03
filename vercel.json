@@ -6,7 +6,7 @@
     },
     "headers": [
       {
-        "source": "/api/(.*)",
+        "source": "https://m4mt2yjvmb.execute-api.us-west-2.amazonaws.com/production",
         "headers": [
           { "key": "Access-Control-Allow-Credentials", "value": "true" },
           { "key": "Access-Control-Allow-Origin", "value": "*" },
