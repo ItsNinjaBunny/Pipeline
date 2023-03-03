@@ -22,6 +22,8 @@ export const request = async <T>(
   headers["Allow-Control-Allow-Origin"] =
     "https://retro-video-game-exchange.vercel.app";
 
+  console.log("headers", headers);
+
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
     method: method.toUpperCase(),
     headers: headers,
