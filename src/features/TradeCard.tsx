@@ -1,9 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import GameCard from "./GameCard";
-import { request } from "src/utils";
+import { getToken, request } from "src/utils";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
+import {
+  ChatBubbleBottomCenterTextIcon,
+  ChatBubbleLeftEllipsisIcon,
+  ChatBubbleLeftRightIcon,
+} from "@heroicons/react/24/outline";
+import io from "socket.io-client";
+import Link from "next/link";
 
 const TradeCard = (props: any) => {
+  async function createRoom() {
+    await getToken();
+    const userId = props.user.id;
+
+    const socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    socket.emit("createRoom", { userId });
+  }
+
   return (
     <div
       id={props.tradeId}
@@ -41,7 +60,22 @@ const TradeCard = (props: any) => {
         )}
       </div>
 
-      <div className="mi-auto relative z-10 h-[50vh] w-1 overflow-visible rounded-full bg-slate-800 "></div>
+      <div className="mi-auto relative z-10 h-[50vh] w-1 overflow-visible rounded-full bg-slate-800 ">
+        {" "}
+      </div>
+      <ChatBubbleLeftEllipsisIcon
+        onClick={createRoom}
+        className=" absolute  top-[5%] z-[100]  w-9 cursor-pointer"
+      />
+      <Link
+        href={{
+          pathname: `/ViewProfile`,
+          query: { user: JSON.stringify(props.user) },
+        }}
+        className="smooth absolute top-3 right-[12%] z-10 ml-auto flex cursor-pointer text-2xl font-light hover:border-b-2 hover:border-b-slate-500 hover:text-slate-500"
+      >
+        From: {props.user.username}
+      </Link>
 
       <div className="z-10 mb-auto flex h-full w-1/2 flex-col p-8">
         <h3 className="mb-4 border-b-2 border-slate-300 pb-3 text-center  text-2xl">
@@ -67,16 +101,33 @@ const TradeCard = (props: any) => {
           </div>
         )}
       </div>
-      <div className="z-50 absolute flex h-full ">
+      <div className="absolute z-50 flex h-full ">
         {props.out === false ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="mr-8 h-8 w-8 cursor-pointer text-green-500 "
             viewBox="0 0 20 20"
             fill="currentColor"
-            onClick={() => {
+            onClick={async () => {
+              await getToken();
+
               props.deleteTrade(props.tradeId);
-              //send the accept trade id
+
+              await request("/offers/" + props.offerId, {
+                method: "PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+                body: {
+                  trade: {
+                    trade: true,
+                    tradeId: props.tradeId,
+                  },
+                },
+              });
             }}
           >
             <path
@@ -93,9 +144,20 @@ const TradeCard = (props: any) => {
             stroke-width="1.5"
             stroke="currentColor"
             className="ml-14 h-8 w-8 cursor-pointer text-red-500"
-            onClick={() => {
+            onClick={async () => {
+              await getToken();
+
               props.deleteTrade(props.tradeId);
-              //send the delting trade id
+
+              await request("/trades/" + props.tradeId, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              });
             }}
           >
             <path
@@ -113,9 +175,20 @@ const TradeCard = (props: any) => {
             stroke-width="1.5"
             stroke="currentColor"
             className="ml-8 h-8 w-8 cursor-pointer text-red-500"
-            onClick={() => {
+            onClick={async () => {
+              await getToken();
+
               props.deleteTrade(props.tradeId);
-              //send the delting trade id
+
+              await request("/trades/" + props.tradeId, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                },
+              });
             }}
           >
             <path

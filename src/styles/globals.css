@@ -297,6 +297,27 @@
     cursor: pointer;
     margin-left: 10px;
   }
+  .card-body {
+    display: flex;
+    justify-content: space-between;
+    overflow-y: auto;
+  }
+  @keyframes flying {
+    0% {
+      transform: rotate(0) translate(0, 0);
+    }
+    100% {
+      transform: rotate(-45deg) translate(80vw, -100vh);
+      opacity: 0;
+    }
+  }
+
+  .animate-flying {
+    animation-name: flying;
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+  }
 
   @keyframes rotation2 {
     from {

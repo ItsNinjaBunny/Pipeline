@@ -41,17 +41,21 @@ const otrades = () => {
                   offerId: React.Key | null | undefined;
                   trades: any[];
                   games: any;
+                  user: any;
                 }) => (
                   <div key={offer.offerId}>
-                    {offer.trades.map((trade: { id: any; games: any }) => (
-                      <TradeCard
-                        deleteTrade={deleteTrade}
-                        offer={offer.games}
-                        tradeId={trade.id}
-                        trade={trade.games}
-                        
-                      ></TradeCard>
-                    ))}
+                    {offer.trades.map(
+                      (trade: { id: any; games: any; user: any }) => (
+                        <TradeCard
+                          deleteTrade={deleteTrade}
+                          offer={offer.games}
+                          tradeId={trade.id}
+                          trade={trade.games}
+                          
+                          user={offer.user}
+                        ></TradeCard>
+                      )
+                    )}
                   </div>
                 )
               )}

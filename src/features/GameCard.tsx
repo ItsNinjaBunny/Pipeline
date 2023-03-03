@@ -19,8 +19,8 @@ const GameCard = (props: any) => {
           />
         )}
         <Image className="mi-auto mb-10 h-1/2 w-1/2" src={game} alt={""} />
-        <p className="text-xl font-medium ">{props.game.name}</p>
-        <p className="text-lg font-medium ">
+        <p className="text-xl font-normal ">{props.game.name}</p>
+        <p className="text-lg font-normal ">
           {props.game.platform.replaceAll("_", " ")} - {props.game.year}
         </p>
       </div>

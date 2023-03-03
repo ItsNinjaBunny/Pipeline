@@ -34,28 +34,25 @@ const rtrades = () => {
           <Navigation></Navigation>
           <div className="content h-full overflow-hidden bg-white">
             <h1 className="fixed top-7 w-[70%] border-b-2 border-slate-300 pb-3  text-center text-2xl">
-              Reccieved Trades
+              Received Trades
             </h1>
             <div className="relative top-[15%] h-[90%] w-full bg-white">
-              {offers.map(
-                (offer: {
-                  offerId: React.Key | null | undefined;
-                  trades: any[];
-                  games: any;
-                }) => (
-                  <div key={offer.offerId}>
-                    {offer.trades.map((trade: { id: any; games: any }) => (
-                      <TradeCard
-                        deleteTrade={deleteTrade}
-                        offer={offer.games}
-                        out={false}
-                        tradeId={trade.id}
-                        trade={trade.games}
-                      ></TradeCard>
-                    ))}
-                  </div>
-                )
-              )}
+              {offers.map((offer: any) => (
+                <div key={offer.offerId}>
+                  {offer.trades.map((trade: any) => (
+                    <TradeCard
+                      deleteTrade={deleteTrade}
+                      offer={offer.games}
+                      out={false}
+                      
+                      user={trade.user}
+                      offerId={offer.id}
+                      tradeId={trade.id}
+                      trade={trade.games}
+                    ></TradeCard>
+                  ))}
+                </div>
+              ))}
             </div>
           </div>
         </div>

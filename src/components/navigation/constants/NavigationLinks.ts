@@ -23,12 +23,12 @@ export const NavigationLinks = [
     icon: CalendarIcon({ className: LinkStyles }),
   },
   {
-    name: "Outgoing Trades",
+    name: "Outgoing ",
     href: "/otrades",
     icon: UsersIcon({ className: LinkStyles }),
   },
   {
-    name: "Received Trades",
+    name: "Received ",
     href: "/rtrades",
     icon: ChartBarIcon({ className: LinkStyles }),
   },

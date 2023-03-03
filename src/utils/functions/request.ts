@@ -5,7 +5,7 @@ export const request = async<T>(url: string, options: {
   body?: any
 }) => {
   const { method, headers, body } = options
-  console.log(body);
+
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
     method: method.toUpperCase(),
     headers: headers,

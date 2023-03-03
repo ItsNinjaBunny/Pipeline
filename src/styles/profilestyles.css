@@ -135,7 +135,7 @@
     border-radius: 20px;
   }
   .add{
-    cursor: pointer;
+    cursor: cell;
     margin-left: auto;
   }
   .rowbox h2{
@@ -237,10 +237,17 @@
     margin-right: 2%;
     outline: none;
   }
-  #games::-webkit-scrollbar{
+  #games,#messages_chat::-webkit-scrollbar{
     background-color:transparent;
   }
   #games::-webkit-scrollbar-thumb {
    background-color: #e7eaf1;
    border-radius:10px;
+  }
+  #input::-webkit-scrollbar{
+    background-color:transparent;
+    cursor: grabbing!important;
+  }
+ #input::-webkit-scrollbar-thumb{
+    cursor: grabbing!important;
   }

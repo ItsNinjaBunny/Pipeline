@@ -3,6 +3,7 @@ import {
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 import Head from "next/head";
+import Link from "next/link";
 import { platform } from "os";
 import React, { useState } from "react";
 import { Navigation, UserCircleIcon } from "src/components";
@@ -58,13 +59,13 @@ const Game = (props: any) => {
   }
   return (
     <>
-      {offers !== undefined && (
-        <>
+
+        
           <Head>
             <title>All Games</title>
           </Head>
           <Navigation />
-
+          {offers !== undefined && (
           <div className="content">
             <div className="header flex h-full flex-col items-center justify-center">
               <div className="w-full overflow-hidden">
@@ -175,16 +176,16 @@ const Game = (props: any) => {
             </div>
             <div
               id="games"
-              className="absolute right-[0.5%] top-[25vh] mr-[2%] flex h-[65vh] w-[80%] flex-row flex-wrap items-center justify-center overflow-y-scroll px-[3%] pr-[9%]  align-middle "
+              className="absolute right-[0.5%] top-[25vh] mr-[2%] flex h-[68vh] w-[80%] flex-row flex-wrap items-center justify-center overflow-y-scroll px-[3%] pr-[9%]  align-middle "
             >
               {title === "" && platform === "" && year === ""
                 ? offers.map((offer: any) => {
                     return (
                       <div
-                        className="mt-10 w-full  rounded-[50px] bg-slate-300 p-[1%] "
+                        className="mt-10 w-full  rounded-[50px] bg-slate-300 p-[2%] "
                         id={`offer-${offer.id}`}
                       >
-                        <h1 className="mt-3 mb-5 flex h-[7vh] flex-row items-center justify-center overflow-hidden text-4xl font-semibold tracking-wide">
+                        <h1 className="mt-3 mb-5 flex h-[7vh] flex-row items-center  justify-center overflow-hidden text-4xl font-normal tracking-wide">
                           Offer -
                           <div className="mt-auto h-full w-auto overflow-visible">
                             <button
@@ -197,6 +198,15 @@ const Game = (props: any) => {
                               <ArrowsRightLeftIcon className="h-10 w-10" />
                             </button>
                           </div>
+                          <Link
+                            href={{
+                              pathname: `/ViewProfile`,
+                              query: { user: JSON.stringify(offer.user) },
+                            }}
+                            className="smooth ml-auto flex cursor-pointer text-2xl font-light hover:border-b-2 hover:border-b-slate-500 hover:text-slate-500"
+                          >
+                            {offer.user.username}
+                          </Link>
                         </h1>{" "}
                         {/* add any other offer information here */}
                         <div className="flex w-full flex-row justify-center space-x-8">
@@ -229,6 +239,7 @@ const Game = (props: any) => {
                               className="mt-2 w-[6vh] rounded-full bg-slate-400 p-[3%] text-slate-900 hover:text-slate-500  "
                             >
                               <ArrowsRightLeftIcon className="h-10 w-10" />
+                              <p>{offer.user}</p>
                             </button>
                           </div>
                         </h1>{" "}
@@ -262,9 +273,9 @@ const Game = (props: any) => {
                 ></SendTrade>,
               ]}
             ></Popup>
-          </div>
-        </>
-      )}
+          </div>)}
+
+
     </>
   );
 };

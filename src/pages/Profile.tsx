@@ -86,6 +86,7 @@ export const Profile = (props: any) => {
       ></EditOffers>,
     ]);
   }
+  
 
   return (
     <>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { getToken } from 'src/utils/functions/get.token';
 
 type Session = {
+
   id: string;
   name: string;
   email: string;
