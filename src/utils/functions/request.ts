@@ -5,6 +5,8 @@ export const request = async<T>(url: string, options: {
   body?: any
 }) => {
   const { method, headers, body } = options
+  
+  headers['Origin'] = 'https://retro-video-game-exchange.vercel.app';
 
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
     method: method.toUpperCase(),
