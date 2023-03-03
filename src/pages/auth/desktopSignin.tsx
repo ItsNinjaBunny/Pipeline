@@ -194,7 +194,7 @@ const DesktopSignIn = () => {
           console.log(data.body);
           localStorage.setItem("accessToken", data.data.accessToken);
           localStorage.setItem("refreshToken", data.data.refreshToken);
-          window.location.href = "http://localhost:3000/Profile";
+          window.location.href = "https://retro-video-game-exchange.vercel.app/Profile";
         } else {
           window.alert("Account Email/Username is Already in Use");
         }

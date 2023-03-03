@@ -159,13 +159,16 @@ const DesktopSignIn = () => {
   };
 
   function postUser(signUpUser: any) {
-    fetch("http://localhost:8080/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: signUpUser }),
-    })
+    fetch(
+      "https://m4mt2yjvmb.execute-api.us-west-2.amazonaws.com/production/users",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user: signUpUser }),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -180,13 +183,16 @@ const DesktopSignIn = () => {
       .catch((error) => window.alert(error));
   }
   function signInUser() {
-    fetch("http://localhost:8080/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: email, password }),
-    })
+    fetch(
+      "https://m4mt2yjvmb.execute-api.us-west-2.amazonaws.com/production/auth/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: email, password }),
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -194,7 +200,8 @@ const DesktopSignIn = () => {
           console.log(data.body);
           localStorage.setItem("accessToken", data.data.accessToken);
           localStorage.setItem("refreshToken", data.data.refreshToken);
-          window.location.href = "http://localhost:3000/Profile";
+          window.location.href =
+            "https://retro-video-game-exchange.vercel.app/Profile";
         } else {
           window.alert("Account Email/Username is Already in Use");
         }
