@@ -54,70 +54,71 @@ export const ViewProfile = (props: any) => {
         <meta name="description" content="Game Trading to a digital level" />
       </Head>
       <Navigation />
+      {user !== undefined && (
+        <div className="content">
+          <div className="header">
+            <div className="inner-header flex"></div>
 
-      <div className="content">
-        <div className="header">
-          <div className="inner-header flex"></div>
-
-          <div className="overflow-hidden">
-            <svg
-              className="waves"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              viewBox="0 24 150 28"
-              preserveAspectRatio="none"
-              shape-rendering="auto"
-            >
-              <defs>
-                <path
-                  id="gentle-wave"
-                  d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-                />
-              </defs>
-              <g className="parallax">
-                <use xlinkHref="#gentle-wave" x="48" y="0" fill="#cccccc5c" />
-                <use xlinkHref="#gentle-wave" x="48" y="3" fill="#cccccc5c" />
-                <use xlinkHref="#gentle-wave" x="48" y="5" fill="#cccccc5c" />
-                <use xlinkHref="#gentle-wave" x="48" y="7" fill="#ccc" />
-              </g>
-            </svg>
-          </div>
-        </div>
-        <div className="userDesc">
-          <Image priority={true} width={100} height={100} alt="" src={icon} />
-          <h1>{signUpUser.username}</h1>
-
-          {rawUser?.admin == true && (
-            <div className="ml-auto flex w-40 justify-end rounded-md border-2 border-slate-900">
-              <h1
-                className="cursor-pointer p-[2px] font-[200!important] "
-                onClick={() => {
-                  updatePopUp(2, "Edit Account Information");
-                }}
+            <div className="overflow-hidden">
+              <svg
+                className="waves"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                viewBox="0 24 150 28"
+                preserveAspectRatio="none"
+                shape-rendering="auto"
               >
-                Delete User
-              </h1>
+                <defs>
+                  <path
+                    id="gentle-wave"
+                    d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                  />
+                </defs>
+                <g className="parallax">
+                  <use xlinkHref="#gentle-wave" x="48" y="0" fill="#cccccc5c" />
+                  <use xlinkHref="#gentle-wave" x="48" y="3" fill="#cccccc5c" />
+                  <use xlinkHref="#gentle-wave" x="48" y="5" fill="#cccccc5c" />
+                  <use xlinkHref="#gentle-wave" x="48" y="7" fill="#ccc" />
+                </g>
+              </svg>
             </div>
-          )}
-        </div>
-        <div className="bio overflow-hidden">
-          <p>{signUpUser.bio}</p>
-        </div>
+          </div>
+          <div className="userDesc">
+            <Image priority={true} width={100} height={100} alt="" src={icon} />
+            <h1>{signUpUser.username}</h1>
 
-        <div className="row over mt-auto">
-          <div className="rowbox">
-            <h2 className="overflow-hidden">
-              Games: {signUpUser.library.length}
-            </h2>
+            {rawUser?.admin == true && (
+              <div className="ml-auto flex w-40 justify-end rounded-md border-2 border-slate-900">
+                <h1
+                  className="cursor-pointer p-[2px] font-[200!important] "
+                  onClick={() => {
+                    updatePopUp(2, "Edit Account Information");
+                  }}
+                >
+                  Delete User
+                </h1>
+              </div>
+            )}
+          </div>
+          <div className="bio overflow-hidden">
+            <p>{signUpUser.bio}</p>
           </div>
 
-          <div className="rowbox">
-            <h2 className="overflow-hidden">
-              Platforms: {signUpUser.platforms.length}
-            </h2>
+          <div className="row over mt-auto">
+            <div className="rowbox">
+              <h2 className="overflow-hidden">
+                Games: {signUpUser.library.length}
+              </h2>
+            </div>
+
+            <div className="rowbox">
+              <h2 className="overflow-hidden">
+                Platforms: {signUpUser.platforms.length}
+              </h2>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
