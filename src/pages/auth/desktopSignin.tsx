@@ -15,6 +15,7 @@ import {
 
 import Image from "next/image";
 import logo from "public/logo.png";
+import { request } from "src/utils";
 
 const DesktopSignIn = () => {
   const [email, setEmail] = useState<string>("");
@@ -159,15 +160,14 @@ const DesktopSignIn = () => {
   };
 
   function postUser(signUpUser: any) {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
+    request(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user: signUpUser }),
+      body: { user: signUpUser },
     })
-      .then((response) => response.json())
-      .then((data) => {
+      .then((data: any) => {
         console.log(data);
         if (data.statusCode === 201) {
           setSignup("show-sign-in");
@@ -180,21 +180,21 @@ const DesktopSignIn = () => {
       .catch((error) => window.alert(error));
   }
   function signInUser() {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+    request(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ username: email, password }),
     })
-      .then((response) => response.json())
-      .then((data) => {
+      .then((data: any) => {
         console.log(data);
         if (data.statusCode === 200) {
           console.log(data.body);
           localStorage.setItem("accessToken", data.data.accessToken);
           localStorage.setItem("refreshToken", data.data.refreshToken);
-          window.location.href = "https://retro-video-game-exchange.vercel.app/Profile";
+          window.location.href =
+            "https://retro-video-game-exchange.vercel.app/Profile";
         } else {
           window.alert("Account Email/Username is Already in Use");
         }

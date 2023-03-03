@@ -22,7 +22,9 @@ export const request = async <T>(
   headers["Allow-Control-Allow-Origin"] =
     "https://retro-video-game-exchange.vercel.app";
 
+  console.log("url", url);
   console.log("headers", headers);
+  console.log("body", body);
 
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
     method: method.toUpperCase(),
