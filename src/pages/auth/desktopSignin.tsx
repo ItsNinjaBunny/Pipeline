@@ -160,7 +160,7 @@ const DesktopSignIn = () => {
   };
 
   async function postUser(signUpUser: any) {
-    const response = await request<any>(`/users`, {
+    const response = await request<any>(`users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -174,7 +174,7 @@ const DesktopSignIn = () => {
     }
   }
   async function signInUser() {
-    const response = await request<any>(`/auth/login`, {
+    const response = await request<any>(`auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
