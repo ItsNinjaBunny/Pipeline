@@ -19,33 +19,30 @@ export const Navigation = (props: any) => {
   const date = new Date();
 
   const [chatRoom, setChatRoom] = useState<any>([]);
-  // useEffect(() => {
-  //   let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
-  //     extraHeaders: {
-  //       authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
-  //     },
-  //   });
-  //   if (socket) {
-  //     socket.on("data", (data: any) => {
-  //       console.log("data", data);
-  //       setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
-  //     });
-  //     socket.on("createdRoom", (data: any) => {
-  //       console.log("createRoom", data);
-  //       setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
-  //     });
-  //     socket.on("test", (data: any) => {
-  //       console.log("test", data);
-  //       setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
-  //     });
-  //   } else {
-  //     console.log("not valid");
-  //   }
+  useEffect(() => {
+    let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
+      },
+    });
 
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
+    socket.on("data", (data: any) => {
+      console.log("data", data);
+      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
+    });
+    socket.on("createdRoom", (data: any) => {
+      console.log("createRoom", data);
+      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
+    });
+    socket.on("test", (data: any) => {
+      console.log("test", data);
+      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const [chats, setChat] = useState([
     {
