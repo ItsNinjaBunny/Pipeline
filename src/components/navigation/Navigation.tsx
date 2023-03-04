@@ -17,28 +17,23 @@ export const Navigation = (props: any) => {
   const [selected, setSelected] = useState("Home");
   const [openChats, setOpenChats] = useState(false);
   const date = new Date();
-  let socket: any;
-  if (localStorage !== undefined) {
-    let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
-      extraHeaders: {
-        Authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
-      },
-    });
-  }
+
 
   const [chatRoom, setChatRoom] = useState<any>([]);
   useEffect(() => {
-    if (socket) {
-      socket.on("data", (data: any) => {
-        console.log("createRoom", data);
-        setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
-      });
-    }
+    let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
+      },
+    });
+
+    socket.on("data", (data: any) => {
+      console.log("createRoom", data);
+      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
+    });
 
     return () => {
-      if (socket) {
-        socket.disconnect();
-      }
+      socket.disconnect();
     };
   }, []);
 
