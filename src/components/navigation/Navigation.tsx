@@ -19,7 +19,7 @@ export const Navigation = (props: any) => {
   const date = new Date();
   let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
     extraHeaders: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      Authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
     },
   });
   const [chatRoom, setChatRoom] = useState<any>([]);
