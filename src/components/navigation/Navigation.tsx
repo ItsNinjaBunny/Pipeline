@@ -35,12 +35,14 @@ export const Navigation = (props: any) => {
     socket.on("joinedRooms", (data: any) => {
       console.log("joined??? -" + data);
     });
+    socket.on("connected", (data) => {
+      socket.emit("joinRooms");
+    });
 
     return () => {
       socket.disconnect();
     };
   }, []);
-  socket.emit("joinRooms");
 
   const [chats, setChat] = useState([
     {
