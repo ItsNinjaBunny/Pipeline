@@ -11,18 +11,26 @@ import io from "socket.io-client";
 import Link from "next/link";
 
 const TradeCard = (props: any) => {
-  let socket: any;
   async function createRoom() {
     await getToken();
     const userId = props.user.id;
 
-    setTimeout(() => {
-      socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
-        extraHeaders: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-    }, 500);
+    let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("connect error", error);
+    });
+
+    socket.on("connect_timeout", () => {
+      console.error("connect timeout");
+    });
     if (socket) {
       console.log(socket.connected);
       socket.emit("test");
