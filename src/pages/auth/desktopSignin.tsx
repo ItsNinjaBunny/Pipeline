@@ -159,25 +159,23 @@ const DesktopSignIn = () => {
     setPhone(formattedValue);
   };
 
-  function postUser(signUpUser: any) {
-    request(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: { user: signUpUser },
-    })
-      .then((data: any) => {
-        console.log(data);
-        if (data.statusCode === 201) {
-          setSignup("show-sign-in");
-          setPage(0);
-          window.alert("Account Created Successfully");
-        } else {
-          window.alert("Account Email/Username is Already in Use");
-        }
-      })
-      .catch((error) => window.alert(error));
+  async function postUser(signUpUser: any) {
+    const response = await request<any>(
+      `${process.env.NEXT_PUBLIC_API_URL}/users`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: { user: signUpUser },
+      }
+    );
+
+    console.log(response);
+    if (response.statusCode === 200) {
+      setSignup("show-sign-in");
+      setPage(0);
+    }
   }
   async function signInUser() {
     const response = await request<any>(
@@ -187,7 +185,7 @@ const DesktopSignIn = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: email, password }),
+        body: { username: email, password },
       }
     );
 
