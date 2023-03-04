@@ -20,7 +20,10 @@ const TradeCard = (props: any) => {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
-    socket.emit("createRoom", {});
+    console.log(socket.connected);
+    socket.emit("test");
+    socket.emit("test2");
+    socket.emit("createRoom", { userId });
   }
 
   return (
