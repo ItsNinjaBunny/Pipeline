@@ -17,7 +17,7 @@ export const Navigation = (props: any) => {
   const [selected, setSelected] = useState("Home");
   const [openChats, setOpenChats] = useState(false);
   const date = new Date();
-  
+
   const [chatRoom, setChatRoom] = useState<any>();
   useEffect(() => {
     let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
@@ -25,7 +25,7 @@ export const Navigation = (props: any) => {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
-    socket.on("createdRoom", (data) => {
+    socket.on("test", (data) => {
       console.log("createRoom", data);
       setChatRoom(<ChatRoom></ChatRoom>);
     });
