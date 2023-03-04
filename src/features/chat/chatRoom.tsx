@@ -9,7 +9,9 @@ import UserChat from "./UserChat";
 import OtherChat from "./OtherChat";
 import { io } from "socket.io-client";
 
+
 const ChatRoom = (props: any) => {
+  
   const [openChats, setOpenChats] = useState(true);
   const [value, setValue] = useState("");
   const handleKeyDown = async (
@@ -35,20 +37,17 @@ const ChatRoom = (props: any) => {
     }
   };
   useEffect(() => {
-    const interval = setInterval(async () => {
-      let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
-        extraHeaders: {
-          authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
-        },
-      });
-      socket.on("messages", async (data: any) => {
-        console.log(data);
-        await setChatMessages((prev) => [...prev, data]);
-      });
+    let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
+      },
+    });
+    socket.on("messages", async (data: any) => {
+      console.log(data);
+      await setChatMessages((prev) => [...prev, data]);
+    });
 
-      updateHeight();
-    }, 10000);
-    return () => clearInterval(interval);
+    updateHeight();
   }, []);
   const updateHeight = () => {
     setTimeout(() => {
