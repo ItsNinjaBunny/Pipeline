@@ -179,27 +179,40 @@ const DesktopSignIn = () => {
       })
       .catch((error) => window.alert(error));
   }
-  function signInUser() {
-    request(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: email, password }),
-    })
-      .then((data: any) => {
-        console.log(data);
-        if (data.statusCode === 200) {
-          console.log(data.body);
-          localStorage.setItem("accessToken", data.data.accessToken);
-          localStorage.setItem("refreshToken", data.data.refreshToken);
-          window.location.href =
-            "https://retro-video-game-exchange.vercel.app/Profile";
-        } else {
-          window.alert("Account Email/Username is Already in Use");
-        }
-      })
-      .catch((error) => window.alert(error));
+  async function signInUser() {
+    const response = await request<any>(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: email, password }),
+      }
+    );
+
+    console.log(response);
+    if (response.statusCode === 200) {
+      console.log(response.data);
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      router.push("/Profile");
+    } else {
+      window.alert("Invalid Login");
+    }
+    // .then((data: any) => {
+    //   console.log(data);
+    //   if (data.statusCode === 200) {
+    //     console.log(data.body);
+    //     localStorage.setItem("accessToken", data.data.accessToken);
+    //     localStorage.setItem("refreshToken", data.data.refreshToken);
+    //     window.location.href =
+    //       "https://retro-video-game-exchange.vercel.app/Profile";
+    //   } else {
+    //     window.alert("Account Email/Username is Already in Use");
+    //   }
+    // })
+    // .catch((error) => window.alert(error));
   }
   return (
     <div className="body color2 absolute overflow-y-hidden">
