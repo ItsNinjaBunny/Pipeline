@@ -17,12 +17,12 @@ export const Navigation = (props: any) => {
   const [selected, setSelected] = useState("Home");
   const [openChats, setOpenChats] = useState(false);
   const date = new Date();
+  const socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+    extraHeaders: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  });
   useEffect(() => {
-    const socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
-      extraHeaders: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
     socket.on("createRoom", (data) => {
       console.log("createRoom", data);
       setChatRoom(<ChatRoom></ChatRoom>);
