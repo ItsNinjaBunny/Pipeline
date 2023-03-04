@@ -25,7 +25,7 @@ export const Navigation = (props: any) => {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
-    socket.on("room", (data) => {
+    socket.on("data", (data) => {
       console.log("createRoom", data);
       setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
     });
@@ -34,6 +34,7 @@ export const Navigation = (props: any) => {
       socket.disconnect();
     };
   }, []);
+
 
   const [chats, setChat] = useState([
     {
