@@ -1,16 +1,28 @@
+const test: Record<string, string> = {};
 
-export const request = async<T>(url: string, options: {
-  method: 'get' | 'post' | 'patch' | 'delete' | 'GET' | 'POST' | 'PATCH' | 'DELETE',
-  headers?: Record<string, string>,
-  body?: any
-}) => {
-  const { method, headers, body } = options
+export const request = async <T>(
+  url: string,
+  options: {
+    method:
+      | "get"
+      | "post"
+      | "patch"
+      | "delete"
+      | "GET"
+      | "POST"
+      | "PATCH"
+      | "DELETE";
+    headers: { [key: string]: string };
+    body?: any;
+  }
+) => {
+  const { method, headers, body } = options;
 
-  const response = await fetch(process.env.NEXT_PUBLIC_API_URL + url, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
     method: method.toUpperCase(),
     headers: headers,
     body: JSON.stringify(body),
   });
 
-  return await <T>response.json();
-}
+  return await (<T>response.json());
+};
