@@ -160,38 +160,29 @@ const DesktopSignIn = () => {
   };
 
   async function postUser(signUpUser: any) {
-    const response = await request<any>(
-      `${process.env.NEXT_PUBLIC_API_URL}/users`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: { user: signUpUser },
-      }
-    );
+    const response = await request<any>(`/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: { user: signUpUser },
+    });
 
-    console.log(response);
     if (response.statusCode === 200) {
       setSignup("show-sign-in");
       setPage(0);
     }
   }
   async function signInUser() {
-    const response = await request<any>(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: { username: email, password },
-      }
-    );
+    const response = await request<any>(`/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: { username: email, password },
+    });
 
-    console.log(response);
     if (response.statusCode === 200) {
-      console.log(response.data);
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
       router.push("/Profile");
