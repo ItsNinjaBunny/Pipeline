@@ -26,6 +26,86 @@ export const Navigation = (props: any) => {
         message: "XxTrenchxX: i need a better offer",
       },
     },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
+    {
+      id: 1,
+      from: "XxTrenchxX",
+      lastMessage: {
+        createdAt: date.toISOString(),
+        message: "XxTrenchxX: i need a better offer",
+      },
+    },
   ]);
   // function delChat(game: any) {
   //   chats.splice(
@@ -41,9 +121,8 @@ export const Navigation = (props: any) => {
   return (
     <div>
       <Messaging chats={chats}></Messaging>
-      <div className='relat'>
+
       <ChatRoom></ChatRoom>
-      </div>
 
       <DesktopNavigation
         selected={selected}

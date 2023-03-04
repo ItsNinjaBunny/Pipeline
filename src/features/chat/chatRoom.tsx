@@ -5,14 +5,23 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
+import UserChat from "./UserChat";
+import OtherChat from "./OtherChat";
 
 const ChatRoom = () => {
   const [openChats, setOpenChats] = useState(true);
   const [value, setValue] = useState("");
-
+  const handleKeyDown = async (
+    event: React.KeyboardEvent<HTMLTextAreaElement>
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      await sendMessage(value);
+    }
+  };
   const handleInputChange = (event: any) => {
     setValue(event.target.value);
-    console.log("value - ");
+
     if (event.target.value.trim().valueOf() === "" || !event.target.value) {
       event.target.style.height = "";
     }
@@ -24,67 +33,138 @@ const ChatRoom = () => {
       scroll.scrollTop = scroll.scrollHeight;
     }
   };
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     const message = (
-  //       <div className=" flex h-auto  w-full flex-row overflow-hidden">
-  //         <div className="relative mx-2 my-2 ml-auto flex max-w-xs flex-col rounded-lg bg-slate-700 py-2 px-4 text-sm leading-5 text-white">
-  //           <p>Hi there! Nice to meet you.</p>
-  //         </div>
-  //       </div>
-  //     );
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const message = {
+        userId: 1,
+        message: "hello the dog went thru the kennel why ??????????????",
+      };
 
-  //     setChatMessages((prev) => [...prev, message]);
-  //     var scroll = document.getElementById("messages_chat");
-  //     if (scroll !== null) {
-  //       scroll.scrollTop = scroll.scrollHeight;
-  //     }
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
+      await setChatMessages((prev) => [...prev, message]);
 
-  const updateHeight = () => {};
-  const [ChatMessages, setChatMessages] = useState<any[]>([]);
-  const getAllMessages = () => {
-    return "";
+      updateHeight();
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+  const updateHeight = () => {
+    setTimeout(() => {
+      var scroll = document.getElementById("messages");
+      if (scroll !== null) {
+        scroll.scrollTop = scroll.scrollHeight - scroll.clientHeight;
+      }
+    }, 500);
   };
-  return (
-    <div
-      className={`${
-        openChats === true && "h-[60%!important]"
-      } smooth absolute  right-[30%] bottom-0 z-[9999] h-[6%] w-[25%] overflow-hidden rounded-md bg-slate-300 ease-in-out`}
-    >
-      <h1
-        onClick={() => {
-          setOpenChats(!openChats);
-        }}
-        className="flex cursor-pointer  flex-row border-b-2 border-b-slate-900 p-[3%]"
-      >
-        XxTrenchxX
-        <ChatBubbleBottomCenterTextIcon className="ml-1  w-5" />
-        {openChats === true ? (
-          <ArrowUpIcon
-            className={`smooth ml-auto h-5 rotate-180 cursor-pointer`}
-          ></ArrowUpIcon>
-        ) : (
-          <XMarkIcon className="ml-auto h-5 "></XMarkIcon>
-        )}
-      </h1>
+  const sendMessage = async (message: string) => {
+    await setValue("");
+    var text = document.getElementById("txt");
+    if (text !== null) {
+      text.style.height = "";
+      text.style.height = text.scrollHeight + "px";
+    }
+    var text = document.getElementById("input");
+    if (text !== null) {
+      text.style.height = "";
+      text.style.height = text.scrollHeight + "px";
+    }
 
-      <div className="flex h-[90%] w-full flex-col  items-end justify-end overflow-hidden ">
-        <div
-          id="messages_chat"
-          className="flex h-[48vh] w-full self-center overflow-y-auto bg-green-700  align-middle"
-        >
-          <div className="mt-auto h-auto w-full  ">{ChatMessages}</div>
+    await setChatMessages((prev) => [...prev, { userId: 2, message: message }]);
+
+    var scroll = document.getElementById("messages");
+    if (scroll !== null) {
+      scroll.scrollTop = scroll.scrollHeight - scroll.clientHeight;
+    }
+  };
+
+  const [ChatMessages, setChatMessages] = useState<any[]>([
+    {
+      userId: 1,
+      message: "hello paco",
+    },
+    {
+      userId: 2,
+      message: "hello ",
+    },
+  ]);
+
+  const elements = ChatMessages.map((message: any) =>
+    message.userId === 2 ? (
+      <UserChat message={message.message}></UserChat>
+    ) : (
+      <OtherChat message={message.message}></OtherChat>
+    )
+  );
+
+  function delChat(id: string) {
+    const parent = document.getElementById("chatRoom");
+    const child = document.getElementById("chatId");
+    console.log(parent);
+    console.log(child);
+    if (child !== null && parent?.contains(child)) {
+      parent?.removeChild(child);
+    }
+  }
+  return (
+    <div id="chatRoom ">
+      <div
+        id="chatId"
+        className={`${
+          openChats === true && "h-[60%!important]"
+        } smooth absolute right-[30%] bottom-0 z-[9999] h-[6%] w-[25%] overflow-hidden rounded-md bg-slate-300 ease-in-out`}
+      >
+        <div className=" float-left h-[7vh] w-full cursor-pointer border-b-2 border-b-slate-900 bg-slate-400 ">
+          <div
+            onClick={() => {
+              setOpenChats(!openChats);
+            }}
+            className="relative  float-left h-full w-[90%]  p-[3%] text-start "
+          >
+            <h1 className="float-left ">XxTrenchxX</h1>
+
+            <ChatBubbleBottomCenterTextIcon className=" relative float-left ml-1 w-5" />
+          </div>
+
+          {openChats === true ? (
+            <ArrowUpIcon
+              onClick={() => {
+                setOpenChats(!openChats);
+              }}
+              className={`smooth mi-auto relative mt-[2.4%] w-7  rotate-180 cursor-pointer`}
+            ></ArrowUpIcon>
+          ) : (
+            <XMarkIcon
+              onClick={() => {
+                delChat("");
+              }}
+              className="mi-auto relative mt-[2.4%] w-7  cursor-pointer "
+            ></XMarkIcon>
+          )}
         </div>
-        <div id="input" className="h-[14%] w-full overflow-y-auto p-[1%]">
-          <textarea
-            className="relative float-left mt-1  h-[5vh] w-3/4 resize-none overflow-hidden rounded-md p-[2%]  font-normal leading-5 tracking-wide"
-            value={value}
-            onChange={handleInputChange}
-          />
-          <PaperAirplaneIcon className=" fixed left-[65%] w-10 rotate-[-45] transform" />
+
+        <div className="flex h-[90%] w-full flex-col  items-end justify-end overflow-hidden ">
+          <div
+            id="messages"
+            className="flex h-[48vh] w-full self-center overflow-y-auto  align-middle"
+          >
+            <div className="mt-auto  h-auto w-full ">{elements}</div>
+          </div>
+          <div
+            id="input"
+            className="h-[16%] w-full overflow-y-auto bg-slate-400 p-[3%]"
+          >
+            <textarea
+              id="txt"
+              className="relative float-left mt-1  h-[3vh] w-[85%] resize-none overflow-hidden rounded-md p-[1%]  font-normal leading-5 tracking-wide"
+              value={value}
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+            <PaperAirplaneIcon
+              onClick={() => {
+                sendMessage(value);
+              }}
+              className=" fixed ml-[21%] mt-1 h-[3.5vh] rotate-[-45deg] transform cursor-pointer rounded-full bg-slate-700 p-1 text-white hover:animate-pulse"
+            />
+          </div>
         </div>
       </div>
     </div>

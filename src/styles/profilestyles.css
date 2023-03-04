@@ -237,7 +237,7 @@
     margin-right: 2%;
     outline: none;
   }
-  #games,#messages_chat::-webkit-scrollbar{
+  #games,#messages,#messageRooms::-webkit-scrollbar{
     background-color:transparent;
   }
   #games::-webkit-scrollbar-thumb {

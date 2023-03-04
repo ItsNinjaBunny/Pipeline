@@ -18,22 +18,27 @@ const Messages = (props: any) => {
       id="messageTab"
       className={`${
         openChats === true && "h-[60%!important]"
-      } smooth fixed right-4 bottom-0 z-[9999] h-[6%] w-[25%] overflow-hidden rounded-md bg-slate-300 ease-in-out`}
+      } smooth fixed right-4 bottom-0 z-[9999] h-[6%] w-[25%]  overflow-hidden rounded-md bg-slate-300 ease-in-out`}
     >
-      <h1 className="flex flex-row border-b-2 border-b-slate-900 p-[3%]">
-        Messaging
-        <ChatBubbleBottomCenterTextIcon className="ml-1 w-5" />
-        <ArrowUpIcon
-          onClick={() => {
-            setOpenChats(!openChats);
-          }}
-          className={`${
-            openChats === true && "rotate-180"
-          } smooth ml-auto h-5 cursor-pointer`}
-        />
-      </h1>
-      {openChats === true &&
-        props.chats.map((chat: any) => <RoomCard chat={chat} />)}
+      <div className=" w-full  overflow-hidden  border-b-2 border-b-slate-900 p-[3%]">
+        <h1 className="flex flex-row overflow-hidden">
+          Messaging
+          <ChatBubbleBottomCenterTextIcon className="ml-1 w-5" />
+          <ArrowUpIcon
+            onClick={() => {
+              setOpenChats(!openChats);
+            }}
+            className={`${
+              openChats === true && "rotate-180"
+            } smooth ml-auto h-full w-7 cursor-pointer overflow-hidden`}
+          />
+        </h1>
+      </div>
+
+      <div id="messageRooms" className="h-[52vh] overflow-y-auto">
+        {openChats === true &&
+          props.chats.map((chat: any) => <RoomCard chat={chat} />)}
+      </div>
     </div>
   );
 };
