@@ -11,15 +11,18 @@ import io from "socket.io-client";
 import Link from "next/link";
 
 const TradeCard = (props: any) => {
+  let socket: any;
   async function createRoom() {
     await getToken();
     const userId = props.user.id;
 
-    const socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
-      extraHeaders: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
+    setTimeout(() => {
+      socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+        extraHeaders: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+    }, 500);
     console.log(socket.connected);
     socket.emit("test");
     socket.emit("test2");
