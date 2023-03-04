@@ -104,7 +104,7 @@ const ChatRoom = () => {
     }
   }
   return (
-    <div id="chatRoom ">
+    <div id="chatRoom">
       <div
         id="chatId"
         className={`${

@@ -11,12 +11,24 @@ import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import RoomCard from "src/features/chat/roomCard";
 import Messaging from "src/features/chat/Messages";
 import ChatRoom from "src/features/chat/chatRoom";
+import { io } from "socket.io-client";
 
 export const Navigation = (props: any) => {
   const [selected, setSelected] = useState("Home");
   const [openChats, setOpenChats] = useState(false);
   const date = new Date();
-
+  useEffect(() => {
+    const socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    socket.on("createRoom", (data) => {
+      console.log("createRoom", data);
+      setChatRoom(<ChatRoom></ChatRoom>);
+    });
+  }, []);
+  const [chatRoom, setChatRoom] = useState<any>();
   const [chats, setChat] = useState([
     {
       id: 1,
@@ -122,7 +134,7 @@ export const Navigation = (props: any) => {
     <div>
       <Messaging chats={chats}></Messaging>
 
-      <ChatRoom></ChatRoom>
+      {chatRoom}
 
       <DesktopNavigation
         selected={selected}

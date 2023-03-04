@@ -17,7 +17,7 @@ const TradeCard = (props: any) => {
 
     const socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
       extraHeaders: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
     socket.emit("createRoom", { userId });
