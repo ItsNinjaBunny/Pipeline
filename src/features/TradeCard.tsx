@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import GameCard from "./GameCard";
 import { getToken, request } from "src/utils";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/solid";
@@ -11,22 +11,31 @@ import io from "socket.io-client";
 import Link from "next/link";
 
 const TradeCard = (props: any) => {
-  let socket: any;
-  async function createRoom() {
-    await getToken();
-    const userId = props.user.id;
+  const [socket, setSocket] = useState<any>();
 
-    setTimeout(() => {
-      socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
-        extraHeaders: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-    }, 500);
-    console.log(socket.connected);
-    socket.emit("test");
-    socket.emit("test2");
-    socket.emit("createRoom", { userId });
+  useEffect(() => {
+    const newSocket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    setSocket(newSocket);
+    return () => {
+      newSocket.close();
+    };
+  }, [setSocket]);
+  async function createRoom() {
+    const userId = props.user.id;
+    if(socket){
+      console.log(socket.connected);
+      socket.emit("test");
+      socket.emit("test2");
+      socket.emit("createRoom", { userId });
+    }else{
+      console.log(socket.connected);
+     
+    }
+
   }
 
   return (
