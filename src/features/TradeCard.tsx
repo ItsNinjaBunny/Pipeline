@@ -23,8 +23,12 @@ const TradeCard = (props: any) => {
     socket.on("connect", () => {
       console.log("connected", socket);
     });
+    const data = {
+      name: "John",
+      age: 30,
+    };
 
-    socket.emit("createRoom", { value: userId });
+    socket.emit("createRoom", data);
 
     socket.on("createdRoom", (data) => {
       console.log(data);
