@@ -18,16 +18,16 @@ export const Navigation = (props: any) => {
   const [openChats, setOpenChats] = useState(false);
   const date = new Date();
 
-  const [chatRoom, setChatRoom] = useState<any>();
+  const [chatRoom, setChatRoom] = useState<any>([]);
   useEffect(() => {
     let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
       extraHeaders: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
-    socket.on("test", (data) => {
+    socket.on("room", (data) => {
       console.log("createRoom", data);
-      setChatRoom(<ChatRoom></ChatRoom>);
+      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
     });
 
     return () => {
