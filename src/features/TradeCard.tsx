@@ -33,15 +33,15 @@ const TradeCard = (props: any) => {
 
     socket.emit("createRoom", data);
 
-    socket.on("createdRoom", (data: any) => {
-      console.log("createRoom", data);
-      const message = { roomId: data.id, message: "fuck you" };
-      socket.emit("message", message);
+    // socket.on("createdRoom", (data: any) => {
+    //   console.log("createRoom", data);
+    //   const message = { roomId: data.id, message: "fuck you" };
+    //   socket.emit("message", message);
 
-      // setChatRoom((prev: any) => [
-      //   <ChatRoom delRoom={setChatRoom} room={data}></ChatRoom>,
-      // ]);
-    });
+    //   // setChatRoom((prev: any) => [
+    //   //   <ChatRoom delRoom={setChatRoom} room={data}></ChatRoom>,
+    //   // ]);
+    // });
 
     socket.on("joinedRooms", (data: any) => {
       console.log("joined??? -" + data);
