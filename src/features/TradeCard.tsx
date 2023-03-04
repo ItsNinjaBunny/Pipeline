@@ -22,6 +22,9 @@ const TradeCard = (props: any) => {
     });
     socket.on("connect", () => {
       console.log("connected");
+      socket.emit("test");
+      socket.emit("test2");
+      socket.emit("createRoom", { userId });
     });
 
     socket.on("connect_error", (error) => {
@@ -31,14 +34,6 @@ const TradeCard = (props: any) => {
     socket.on("connect_timeout", () => {
       console.error("connect timeout");
     });
-    if (socket) {
-      console.log(socket.connected);
-      socket.emit("test");
-      socket.emit("test2");
-      socket.emit("createRoom", { userId });
-    } else {
-      console.log("invalid");
-    }
   }
 
   return (
