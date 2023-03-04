@@ -25,7 +25,7 @@ const TradeCard = (props: any) => {
     });
     socket.emit("createRoom", { userId });
 
-    socket.on("createRoom", (data) => {
+    socket.on("createdRoom", (data) => {
       console.log(data);
     });
 
