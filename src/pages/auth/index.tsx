@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Typewriter from "src/features/auth/components/TypeWriter";
 import {
@@ -6,7 +6,6 @@ import {
   EnvelopeIcon,
   UserCircleIcon,
   PhoneIcon,
-  ArrowUpIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   TrashIcon,
@@ -15,8 +14,9 @@ import {
 
 import Image from "next/image";
 import logo from "public/logo.png";
+import { request } from "src/utils";
 
-const DesktopSignIn = () => {
+const Auth = () => {
   const [email, setEmail] = useState<string>("");
   const [signUp, setSignup] = useState<string>("show-sign-in");
   const [password, setPassword] = useState<string>("");
@@ -158,57 +158,49 @@ const DesktopSignIn = () => {
     setPhone(formattedValue);
   };
 
-  function postUser(signUpUser: any) {
-    fetch(
-      "https://m4mt2yjvmb.execute-api.us-west-2.amazonaws.com/production/users",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({ user: signUpUser }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.statusCode === 201) {
-          setSignup("show-sign-in");
-          setPage(0);
-          window.alert("Account Created Successfully");
-        } else {
-          window.alert("Account Email/Username is Already in Use");
-        }
-      })
-      .catch((error) => window.alert(error));
+  async function postUser(signUpUser: any) {
+    const response = await request<any>(`/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: { user: signUpUser },
+    });
+
+    if (response.statusCode === 200) {
+      setSignup("show-sign-in");
+      setPage(0);
+    }
   }
-  function signInUser() {
-    fetch(
-      "https://m4mt2yjvmb.execute-api.us-west-2.amazonaws.com/production/auth/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify({ username: email, password }),
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.statusCode === 200) {
-          console.log(data.body);
-          localStorage.setItem("accessToken", data.data.accessToken);
-          localStorage.setItem("refreshToken", data.data.refreshToken);
-          window.location.href =
-            "https://retro-video-game-exchange.vercel.app/Profile";
-        } else {
-          window.alert("Account Email/Username is Already in Use");
-        }
-      })
-      .catch((error) => window.alert(error));
+  async function signInUser() {
+    const response = await request<any>(`/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: { username: email, password },
+    });
+
+    if (response.statusCode === 200) {
+      localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
+      router.push("/Profile");
+    } else {
+      window.alert("Invalid Login");
+    }
+    // .then((data: any) => {
+    //   console.log(data);
+    //   if (data.statusCode === 200) {
+    //     console.log(data.body);
+    //     localStorage.setItem("accessToken", data.data.accessToken);
+    //     localStorage.setItem("refreshToken", data.data.refreshToken);
+    //     window.location.href =
+    //       "https://retro-video-game-exchange.vercel.app/Profile";
+    //   } else {
+    //     window.alert("Account Email/Username is Already in Use");
+    //   }
+    // })
+    // .catch((error) => window.alert(error));
   }
   return (
     <div className="body color2 absolute overflow-y-hidden">
@@ -556,4 +548,4 @@ const DesktopSignIn = () => {
   );
 };
 
-export default DesktopSignIn;
+export default Auth;
