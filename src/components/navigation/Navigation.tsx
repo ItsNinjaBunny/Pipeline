@@ -19,20 +19,12 @@ export const Navigation = (props: any) => {
   const date = new Date();
 
   const [chatRoom, setChatRoom] = useState<any>([]);
-  const [socket, setSocket] = useState<any>();
-
   useEffect(() => {
-    const newSocket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+    let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
       extraHeaders: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
       },
     });
-    setSocket(newSocket);
-    return () => {
-      newSocket.close();
-    };
-  }, [setSocket]);
-  useEffect(() => {
     if (socket) {
       socket.on("data", (data: any) => {
         console.log("data", data);
@@ -47,7 +39,7 @@ export const Navigation = (props: any) => {
         setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
       });
     } else {
-      console.log(socket.connected);
+      console.log("not valid");
     }
 
     return () => {
