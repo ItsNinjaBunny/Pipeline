@@ -29,9 +29,7 @@ const TradeCard = (props: any) => {
     console.log(userId);
     socket.emit("createRoom", data);
 
-    socket.on("createdRoom", (data) => {
-      console.log(data);
-    });
+    
 
     socket.on("connect_error", (error) => {
       console.error("connect error", error);

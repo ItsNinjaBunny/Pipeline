@@ -7,8 +7,9 @@ import {
 import React, { useEffect, useState } from "react";
 import UserChat from "./UserChat";
 import OtherChat from "./OtherChat";
+import { io } from "socket.io-client";
 
-const ChatRoom = () => {
+const ChatRoom = (props: any) => {
   const [openChats, setOpenChats] = useState(true);
   const [value, setValue] = useState("");
   const handleKeyDown = async (
@@ -35,12 +36,15 @@ const ChatRoom = () => {
   };
   useEffect(() => {
     const interval = setInterval(async () => {
-      const message = {
-        userId: 1,
-        message: "hello the dog went thru the kennel why ??????????????",
-      };
-
-      await setChatMessages((prev) => [...prev, message]);
+      let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+        extraHeaders: {
+          authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
+        },
+      });
+      socket.on("messages", async (data: any) => {
+        console.log(data);
+        await setChatMessages((prev) => [...prev, data]);
+      });
 
       updateHeight();
     }, 10000);
@@ -66,8 +70,14 @@ const ChatRoom = () => {
       text.style.height = "";
       text.style.height = text.scrollHeight + "px";
     }
+    let socket = io(`${process.env.NEXT_PUBLIC_WS_URL}`, {
+      extraHeaders: {
+        authorization: `Bearer ${localStorage?.getItem("accessToken")}`,
+      },
+    });
+    socket.emit("message", "" + message);
 
-    await setChatMessages((prev) => [...prev, { userId: 2, message: message }]);
+    await setChatMessages((prev) => [...prev, message]);
 
     var scroll = document.getElementById("messages");
     if (scroll !== null) {
@@ -75,22 +85,13 @@ const ChatRoom = () => {
     }
   };
 
-  const [ChatMessages, setChatMessages] = useState<any[]>([
-    {
-      userId: 1,
-      message: "hello paco",
-    },
-    {
-      userId: 2,
-      message: "hello ",
-    },
-  ]);
+  const [ChatMessages, setChatMessages] = useState<any[]>([]);
 
   const elements = ChatMessages.map((message: any) =>
-    message.userId === 2 ? (
-      <UserChat message={message.message}></UserChat>
-    ) : (
+    message.userId === props.room.users[0].id ? (
       <OtherChat message={message.message}></OtherChat>
+    ) : (
+      <UserChat message={message.message}></UserChat>
     )
   );
 
@@ -102,6 +103,7 @@ const ChatRoom = () => {
     if (child !== null && parent?.contains(child)) {
       parent?.removeChild(child);
     }
+    props.delRoom((prev: any) => []);
   }
   return (
     <div id="chatRoom">

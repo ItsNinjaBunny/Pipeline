@@ -26,18 +26,13 @@ export const Navigation = (props: any) => {
       },
     });
 
-    socket.on("data", (data: any) => {
-      console.log("data", data);
-      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
-    });
     socket.on("createdRoom", (data: any) => {
       console.log("createRoom", data);
-      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
+      setChatRoom((prev: any) => [
+        <ChatRoom delRoom={setChatRoom} room={data}></ChatRoom>,
+      ]);
     });
-    socket.on("test", (data: any) => {
-      console.log("test", data);
-      setChatRoom((prev: any) => [<ChatRoom></ChatRoom>]);
-    });
+   
 
     return () => {
       socket.disconnect();
