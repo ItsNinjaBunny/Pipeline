@@ -60,7 +60,7 @@ const Game = (props: any) => {
   return (
     <>
 
-        
+
           <Head>
             <title>All Games</title>
           </Head>
@@ -176,7 +176,7 @@ const Game = (props: any) => {
             </div>
             <div
               id="games"
-              className="absolute right-[0.5%] top-[25vh] mr-[2%] flex h-[68vh] w-[80%] flex-row flex-wrap items-center justify-center overflow-y-scroll px-[3%] pr-[9%]  align-middle "
+              className="absolute right-[0.5%] top-[25vh] mr-[2%] flex h-[68vh] w-[80%] flex-row flex-wrap items-center justify-center overflow-y-auto px-[3%] pr-[9%]  align-middle "
             >
               {title === "" && platform === "" && year === ""
                 ? offers.map((offer: any) => {
