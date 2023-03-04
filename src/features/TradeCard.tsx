@@ -22,9 +22,11 @@ const TradeCard = (props: any) => {
     });
     socket.on("connect", () => {
       console.log("connected");
-      socket.emit("test");
-      socket.emit("test2");
-      socket.emit("createRoom", { userId });
+    });
+    socket.send("createRoom", { userId });
+
+    socket.on("createRoom", (data) => {
+      console.log(data);
     });
 
     socket.on("connect_error", (error) => {
